@@ -59,7 +59,6 @@ export default {
   created() {
     this.range.start = dayjs().subtract(5, 'day')
     this.range.end = dayjs().add(5, 'day')
-
     this.http = http.create({
       baseURL: 'http://json-server.localhost:3001/api'
     })
