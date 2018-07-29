@@ -78,7 +78,7 @@
     @Prop({type: Boolean, default: false})
     public searching: boolean
 
-    @Prop({type: Boolean, default: true})
+    @Prop({type: Boolean, default: false})
     public clearButton: boolean
 
     @Prop({type: Boolean, default: true})
@@ -90,11 +90,11 @@
     @Prop({type: String, default: 'MMMM D, YYYY'})
     public format: string
 
-    @Prop({type: [Dayjs, Date, Object, String], default: undefined})
-    public startDate: Dayjs | Date | object | string | undefined
+    @Prop({type: Dayjs, required: true})
+    public startDate: Dayjs
 
-    @Prop({type: [Dayjs, Date, Object, String], default: undefined})
-    public endDate: Dayjs | Date | object | string | undefined
+    @Prop({type: Dayjs, required: true})
+    public endDate: Dayjs
 
     @Prop({
       type: Object, default: () => ({
@@ -129,8 +129,8 @@
 
     get disabledDates () {
       return {
-        to: (this.startDate as Dayjs).toDate(),
-        from: (this.endDate as Dayjs).toDate()
+        to: this.startDate.toDate(),
+        from: this.endDate.toDate()
       }
     }
 
@@ -185,8 +185,8 @@
           this.checkout = date
       }
 
-      this.$emit('datepicker:checkin', this.checkin)
-      this.$emit('datepicker:checkout', this.checkout)
+      this.$emit('checkin', this.checkin)
+      this.$emit('checkout', this.checkout)
 
       this.toggleSearchDisabled()
     }
@@ -196,7 +196,7 @@
         return false
       }
 
-      this.$emit('datepicker:search', {checkin: this.checkin, checkout: this.checkout})
+      this.$emit('search', {checkin: this.checkin, checkout: this.checkout})
     }
 
     protected toggleSearchDisabled () {

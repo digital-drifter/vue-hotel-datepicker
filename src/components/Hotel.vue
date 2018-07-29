@@ -1,9 +1,13 @@
 <template>
-    <div class="card">
+    <div class="card" style="border: none">
         <img class="card-img-top" :src="image" :alt="imageAlt">
         <div class="card-body">
             <h5 class="card-title" v-text="name"></h5>
             <div class="card-text" v-text="description"></div>
+        </div>
+        <div class="card-footer d-flex justify-content-between w-100">
+            <span>{{ rate | nightly }}</span>
+            <span>Book Now</span>
         </div>
     </div>
 </template>
@@ -11,7 +15,13 @@
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
 
-  @Component
+  @Component({
+    filters: {
+      nightly (value: number) {
+        return `$${value} / night`
+      }
+    }
+  })
   export default class Hotel extends Vue {
     @Prop({required: true})
     public name: string

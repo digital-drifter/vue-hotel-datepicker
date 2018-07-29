@@ -1,0 +1,7 @@
+{
+        "port": 3001,
+        "host": "json-server.localhost",
+        "no-cors": false,
+        "snapshots": "server/snapshots",
+        "delay": 5000
+}

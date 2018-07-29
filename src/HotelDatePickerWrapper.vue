@@ -8,14 +8,14 @@
                         :searching="searching"
                         :start-date="range.start"
                         :end-date="range.end"
-                        @datepicker:search="onSearch">
+                        @search="onSearch">
                 </hotel-date-picker>
-                <results-list
+                <results-modal
                         v-else
-                        @resultslist:close="onClose"
+                        @close="onClose"
                         key="results-list"
                         :items="results">
-                </results-list>
+                </results-modal>
             </transition-group>
         </div>
     </div>
@@ -29,7 +29,7 @@
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import HotelDatePicker from '@/components/HotelDatePicker.vue'
   import SearchOverlay from '@/components/SearchOverlay.vue'
-  import ResultsList from '@/components/ResultsList.vue'
+  import ResultsModal from '@/components/ResultsModal.vue'
   import http from './http'
 
   const icons: { [key: string]: IconDefinition } = {
@@ -51,7 +51,7 @@
       HotelDatePicker,
       SearchOverlay,
       FontAwesomeIcon,
-      ResultsList
+      ResultsModal
     }
   })
   export default class HotelDatePickerWrapper extends Vue {
@@ -59,9 +59,9 @@
     public http: any = null
     public searching: boolean = false
     public results: any[] = []
-    public range: { [key: string]: Dayjs | null } = {
-      start: null,
-      end: null
+    public range: { [key: string]: Dayjs } = {
+      start: dayjs(),
+      end: dayjs()
     }
 
     protected created () {
