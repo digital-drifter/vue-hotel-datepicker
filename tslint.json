@@ -9,8 +9,26 @@
     ]
   },
   "rules": {
-    "quotemark": [true, "single"],
-    "indent": [true, "spaces", 2],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "semicolon": [
+      false,
+      "always"
+    ],
+    "trailing-comma": [
+      false,
+      {
+        "singleline": "always",
+        "multiline": "always"
+      }
+    ],
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
