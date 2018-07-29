@@ -1,6 +1,6 @@
-# test-project
+# Vue Hotel Datepicker
 
-> A Vue.js project
+> Select check in / check out dates and display a list of available hotels.
 
 ## Build Setup
 
