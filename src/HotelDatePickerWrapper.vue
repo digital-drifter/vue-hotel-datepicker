@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="d-flex justify-content-center">
-      <transition-group name="fade">
+      <transition-group name="fade" mode="out-in">
         <hotel-date-picker 
           v-if="!results.length"
           key="date-picker"
