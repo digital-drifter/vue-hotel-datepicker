@@ -23,20 +23,28 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator'
-  import dayjs from 'dayjs'
-  import { library } from '@fortawesome/fontawesome-svg-core'
+  import dayjs, { Dayjs } from 'dayjs'
+  import { IconDefinition, library } from '@fortawesome/fontawesome-svg-core'
   import { faArrowLeft, faCalendar, faSearch, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-  import HotelDatePicker from './components/HotelDatePicker.vue'
-  import SearchOverlay from './components/SearchOverlay.vue'
-  import ResultsList from './components/ResultsList.vue'
+  import HotelDatePicker from '@/components/HotelDatePicker.vue'
+  import SearchOverlay from '@/components/SearchOverlay.vue'
+  import ResultsList from '@/components/ResultsList.vue'
   import http from './http'
 
-  library.add(faArrowLeft)
-  library.add(faCalendar)
-  library.add(faSearch)
-  library.add(faSpinner)
-  library.add(faTimes)
+  const icons: { [key: string]: IconDefinition } = {
+    ArrowLeft: faArrowLeft,
+    Calendar: faCalendar,
+    Search: faSearch,
+    Spinner: faSpinner,
+    Times: faTimes
+  }
+
+  library.add(icons.ArrowLeft)
+  library.add(icons.Calendar)
+  library.add(icons.Search)
+  library.add(icons.Spinner)
+  library.add(icons.Times)
 
   @Component({
     components: {
@@ -47,16 +55,16 @@
     }
   })
   export default class HotelDatePickerWrapper extends Vue {
-    name: string = 'HotelDatePickerWrapper'
-    http: any = null
-    searching: boolean = false
-    results: any[] = []
-    range: any = {
+    public name: string = 'HotelDatePickerWrapper'
+    public http: any = null
+    public searching: boolean = false
+    public results: any[] = []
+    public range: { [key: string]: Dayjs | null } = {
       start: null,
       end: null
     }
 
-    created () {
+    protected created () {
       this.range.start = dayjs().subtract(5, 'day')
       this.range.end = dayjs().add(5, 'day')
 
@@ -65,7 +73,7 @@
       })
     }
 
-    onSearch ({checkin, checkout}) {
+    protected onSearch (dates: { [key: string]: Date }) {
       this.searching = !this.searching
 
       this.http.get('/hotels')
@@ -84,7 +92,7 @@
         })
     }
 
-    onClose () {
+    protected onClose () {
       this.results.splice(0, this.results.length)
     }
   }

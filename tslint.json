@@ -5,7 +5,9 @@
   ],
   "linterOptions": {
     "exclude": [
-      "node_modules/**"
+      "dist/**",
+      "node_modules/**",
+      "public/**"
     ]
   },
   "rules": {
@@ -22,6 +24,16 @@
       false,
       "always"
     ],
+    "space-before-function-paren": [
+      false,
+      {
+        "anonymous": "always",
+        "asyncArrow": "always",
+        "constructor": "always",
+        "method": "always",
+        "named": "always"
+      }
+    ],
     "trailing-comma": [
       false,
       {
@@ -29,6 +41,7 @@
         "multiline": "always"
       }
     ],
+    "no-console": false,
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,

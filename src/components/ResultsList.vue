@@ -3,14 +3,14 @@
         <div class="card-body">
             <div class="card-header d-flex flex-row justify-content-between w-100"
                  style="background-color: rgba(0,150,136,1); color: white">
-        <span>
-          <font-awesome-icon icon="arrow-left"></font-awesome-icon>
-          Search Again
-        </span>
-                <span>
-          <font-awesome-icon icon="times" @click="onClose"></font-awesome-icon>
-          Close
-        </span>
+                <div>
+                    <font-awesome-icon icon="arrow-left"></font-awesome-icon>
+                    Search Again
+                </div>
+                <div>
+                    <font-awesome-icon icon="times" @click="onClose"></font-awesome-icon>
+                    Close
+                </div>
             </div>
             <hotel
                     v-for="(item, index) in items"
@@ -36,14 +36,13 @@
     }
   })
   export default class ResultsList extends Vue {
-    name: string = 'ResultsList'
+    public name: string = 'ResultsList'
 
     @Prop({type: Array, required: true})
-    items: any[]
+    public items: any[]
 
-    onClose () {
+    protected onClose () {
       this.$emit('resultslist:close')
     }
-
   }
 </script>

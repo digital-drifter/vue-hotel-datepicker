@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig} from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 
 const http = {
   create: (config: AxiosRequestConfig) => {
