@@ -171,8 +171,7 @@ export default {
       const date = !value ? null : value
 
       switch (true) {
-        case this.checkin && this.checkout:
-        case this.checkin && (this.checkin >= date):
+        case (!!this.checkin && !!this.checkout) || (this.checkin >= date):
           this.checkout = null
           this.checkin = date
           break
