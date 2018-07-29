@@ -1,4 +1,4 @@
-Error: Can't find a root directory while resolving a config file path.language: node_js
+language: node_js
 node_js:
   - "10.6"
 before_install:
