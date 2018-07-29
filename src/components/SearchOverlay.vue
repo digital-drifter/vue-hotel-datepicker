@@ -1,6 +1,6 @@
 <template>
   <div :style="style">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex flex-column justify-content-center align-items-center h-100">
       <div class="sk-cube-grid">
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'SearchIndicator',
+  name: 'SearchOverlay',
   props: {
     searching: {
       type: Boolean,

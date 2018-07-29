@@ -1,12 +1,46 @@
 <template>
   <div class="card">
-    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+    <img class="card-img-top" :src="image" :alt="imageAlt">
+    <div class="card-body">
+      <h5 class="card-title" v-text="name"></h5>
+      <div class="card-text" v-text="description"></div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Hotel",
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: false
+    },
+    rate: {
+      type: Number,
+      required: true
+    },
+    image: {
+      type: String,
+      required: false
+    },
+    imageAlt: {
+      type: String,
+      required: false
+    },
+    website: {
+      type: String,
+      required: false
+    },
+    cancellationPolicy: {
+      type: String,
+      required: false
+    }
+  },
   data () {
     return {
       hotels: [

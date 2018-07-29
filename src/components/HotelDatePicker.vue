@@ -4,7 +4,7 @@
     <div class="card-header d-flex flex-row justify-content-between" :style="theme">
       <span>
         <font-awesome-icon icon="calendar"></font-awesome-icon>
-        <span class="pl-2">{{ title }}</span>
+        <span class="pl-2 font-weight-bold">{{ title }}</span>
       </span>
       <span v-show="checkin || checkout" v-tooltip="{ content: '' }">
       <font-awesome-icon icon="times" @click="onClear" style="cursor: pointer"></font-awesome-icon>
@@ -24,13 +24,13 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item d-flex flex-row justify-content-between" :style="theme">
         <span class="font-weight-light">Check In</span>
-        <span >{{ checkin | formatDate(format) }}</span>
+        <span class="font-weight-bold">{{ checkin | formatDate(format) }}</span>
       </li>
       <li class="list-group-item d-flex flex-row justify-content-between" :style="theme">
         <span class="font-weight-light">Check Out</span>
-        <span>{{ checkout | formatDate(format) }}</span>
+        <span class="font-weight-bold">{{ checkout | formatDate(format) }}</span>
       </li>
-      <li class="list-group-item text-center" :style="searchStyle" @click="onSearch" @mouseover="onMouseover" :disabled="searchDisabled">
+      <li class="list-group-item text-center search--disabled" :style="searchStyle" @click="onSearch" @mouseover="onMouseover" ref="search">
         <font-awesome-icon :icon="searchIcon" :spin="searching"></font-awesome-icon>
         <span class="pl-2" v-text="searchText"></span>
       </li>
@@ -71,7 +71,7 @@ export default {
     theme: {
       type: Object,
       default: () => ({
-        color: 'white',
+        color: 'rgba(236,239,241,1)',
         backgroundColor: 'rgba(0,150,136,1)'
       })
     },
@@ -90,11 +90,14 @@ export default {
     endDate: {
       type: [Date,Object,String],
       default: null
+    },
+    searching: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
-      searching: false,
       selected: {
         start: null,
         end: null
@@ -123,7 +126,8 @@ export default {
     },
     searchStyle () {
       return {
-        color: this.searchDisabled ? 'grey' : 'black'
+        color: this.searchDisabled ? 'grey' : 'rgba(236,239,241,1)',
+        backgroundColor: this.searchDisabled ? 'rgba(238,238,238,1)' : 'rgba(61,90,254,1)'
       }
     },
     disabledDates () {
@@ -166,36 +170,37 @@ export default {
     onSelected (value) {
       const date = !value ? null : value
 
-      if (this.checkin && this.checkout) {
-        this.checkout = null
-        this.checkin = date
-      } else if (this.checkin && (this.checkin >= date)) {
-        this.checkout = null
-        this.checkin = date
-      } else if (!this.checkin) {
-        this.checkin = date
-      } else {
-        this.checkout = date
+      switch (true) {
+        case (!!this.checkin && !!this.checkout) || (this.checkin >= date):
+          this.checkout = null
+          this.checkin = date
+          break
+        case !this.checkin:
+          this.checkin = date
+          break
+        default:
+          this.checkout = date
       }
 
       this.$emit('datepicker:checkin', this.checkin)
       this.$emit('datepicker:checkout', this.checkout)
+
+      this.toggleSearchDisabled()
     },
     onSearch () {
       if (this.searching || this.searchDisabled) {
         return false
       }
 
-      this.toggleSearching()
-
-      setTimeout(() => {
-        this.toggleSearching()
-      }, 5000)
+      this.$emit('datepicker:search', { checkin: this.checkin, checkout: this.checkout })
     },
-    toggleSearching () {
-      this.searching = !this.searching
-      this.$emit('datepicker:searching', this.searching)
+    toggleSearchDisabled () {
+      if (this.searchDisabled) {
+        this.$refs.search.classList.add('search--disabled')  
+      } else {
+        this.$refs.search.classList.remove('search--disabled')
+      }
     }
   }
-};
+}
 </script>
