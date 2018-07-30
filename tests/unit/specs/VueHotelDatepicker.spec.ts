@@ -1,16 +1,25 @@
-import { shallowMount } from '@vue/test-utils';
-import VueHotelDatepicker from '@/components/VueHotelDatepicker.vue';
+import { shallowMount, Wrapper } from '@vue/test-utils'
+import VueHotelDatepicker from '@/components/VueHotelDatepicker.vue'
 
-describe('VueHotelDatepicker.vue', () => {
-  it('start date prop is set', () => {
-    const wrapper = shallowMount(VueHotelDatepicker);
+describe('VueHotelDatepicker mounted', () => {
+  let wrapper: Wrapper<any>
 
-    expect(wrapper.vm.$data.startDate).toBeInstanceOf(Date);
-  });
+  beforeEach(() => {
+    wrapper = shallowMount(VueHotelDatepicker, {
+      propsData: {
+        startDate: new Date(),
+        endDate: new Date(),
+        request: new Request('http://example.com')
+      }
+    })
+  })
 
-  it('end date prop is set', () => {
-    const wrapper = shallowMount(VueHotelDatepicker);
-
-    expect(wrapper.vm.$data.endDate).toBeInstanceOf(Date);
-  });
-});
+  it('sets default data', () => {
+    expect(wrapper.vm.startDate).toBeInstanceOf(Date)
+    expect(wrapper.vm.endDate).toBeInstanceOf(Date)
+    expect(wrapper.vm.request).toBeInstanceOf(Request)
+    expect(wrapper.vm.name).toMatch('VueHotelDatepicker')
+    expect(wrapper.vm.searching).toBeFalsy()
+    expect(wrapper.vm.results).toHaveLength(0)
+  })
+})

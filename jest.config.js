@@ -11,12 +11,13 @@ module.exports = {
   transform: {
     '^.+\\.vue$': 'vue-jest',
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.jsx?$': 'babel-jest',
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
-  // setupFiles: ['<rootDir>/tests/unit/setup'],
+  setupFiles: ['<rootDir>/tests/unit/setup'],
   snapshotSerializers: [
     'jest-serializer-vue'
   ],
