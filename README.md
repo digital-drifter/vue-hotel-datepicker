@@ -2,6 +2,8 @@
 
 Display a date range selector for setting check in and check out dates.
 
+Built on [vuejs-datepicker](https://github.com/charliekassel/vuejs-datepicker)
+
 ## Project setup
 ```
 yarn install
