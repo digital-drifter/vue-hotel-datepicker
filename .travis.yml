@@ -15,3 +15,6 @@ jobs:
       script:
         - yarn run lint
         - yarn run test:unit
+    - stage: build
+      script:
+        - yarn run bundle
