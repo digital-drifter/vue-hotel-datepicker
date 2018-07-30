@@ -5,20 +5,19 @@
                 <div class="modal-container">
                     <div class="modal-header d-flex flex-row justify-content-between w-100"
                          style="background-color: rgba(0,150,136,1); color: white">
-                        <div>Found {{ items.length }} results</div>
                         <div @click="onClose" @mouseover="onMouseover">
-                            <font-awesome-icon icon="times"></font-awesome-icon>
-                            Close
+                            <font-awesome-icon icon="arrow-left"></font-awesome-icon>
+                            Back
                         </div>
+                        <div>{{ items | results }}</div>
                     </div>
                     <div class="modal-body">
-                        <hotel
-                                v-for="(item, index) in items"
-                                :key="index"
-                                :name="item.name"
-                                :rate="item.rate"
-                                :image="item.image"
-                                :description="item.description">
+                        <hotel v-for="(item, index) in items"
+                               :key="index"
+                               :name="item.name"
+                               :rate="item.rate"
+                               :image="item.image"
+                               :description="item.description">
                         </hotel>
                     </div>
                 </div>
@@ -36,6 +35,12 @@
     components: {
       Hotel,
       FontAwesomeIcon
+    },
+    filters: {
+      results (items: any[]) {
+        const count: number = items.length
+        return count > 1 ? `Found ${count} results` : `Found ${count} result`
+      }
     }
   })
   export default class ResultsModal extends Vue {
@@ -46,10 +51,6 @@
 
     protected onMouseover (event: any) {
       event.target.style.cursor = 'pointer'
-    }
-
-    protected onSearchAgain () {
-      this.$emit('search')
     }
 
     protected onClose () {

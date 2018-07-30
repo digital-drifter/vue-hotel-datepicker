@@ -34,6 +34,11 @@ const devServer = {
 
 module.exports = {
   configureWebpack: {
+    devtool: 'cheap-eval-source-map',
+    output: {
+      filename: 'vue-hotel-datepicker.js',
+      libraryTarget: 'umd'
+    },
     plugins: [
       new CompressionPlugin({
         algorithm: 'gzip',
@@ -46,11 +51,15 @@ module.exports = {
         ]
       })
     ],
+    performance: {
+      hints: false
+    },
     resolve: {
       alias: {
         '@/*': './src/*',
         vue$: 'vue/dist/vue.esm'
-      }
+      },
+      extensions: ['*', '.js', '.json', '.vue', '.ts']
     }
   },
   productionSourceMap: true,
