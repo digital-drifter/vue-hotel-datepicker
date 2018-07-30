@@ -29,7 +29,8 @@
     "test:unit": "vue-cli-service test:unit",
     "json-server": "node_modules/.bin/json-server --watch server/db.json --routes server/routes.json -c server/json-server.json",
     "bundle": "yarn lint && rimraf dist && babel-node build/index.js",
-    "deps": "yarn install --ignore-optional --ignore-platform --no-progress --non-interactive"
+    "deps": "yarn install --ignore-optional --ignore-platform --no-progress --non-interactive",
+    "version:patch": "npm version patch --force -m"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
