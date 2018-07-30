@@ -1,20 +1,20 @@
 <template>
     <div id="app">
-        <vue-hotel-date-picker
+        <vue-hotel-datepicker
                 :start-date="startDate"
                 :end-date="endDate"
                 :request="request">
-        </vue-hotel-date-picker>
+        </vue-hotel-datepicker>
     </div>
 </template>
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
-  import VueHotelDatePicker from '@/components/VueHotelDatePicker.vue'
+  import VueHotelDatepicker from '@/components/VueHotelDatepicker.vue'
 
   @Component({
     components: {
-      VueHotelDatePicker
+      VueHotelDatepicker
     }
   })
   export default class App extends Vue {

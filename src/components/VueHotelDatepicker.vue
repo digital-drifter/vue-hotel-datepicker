@@ -52,8 +52,8 @@
       ResultsModal
     }
   })
-  export default class VueHotelDatePicker extends Vue {
-    public name: string = 'VueHotelDatePicker'
+  export default class VueHotelDatepicker extends Vue {
+    public name: string = 'VueHotelDatepicker'
     public results: any[] = []
     protected searching: boolean = false
 
@@ -102,8 +102,6 @@
   }
 </script>
 
-<style>
-    * {
-        border-radius: 0 !important;
-    }
+<style type="text/scss" lang="sass">
+    @import "../assets/scss/vue-hotel-datepicker.scss"
 </style>

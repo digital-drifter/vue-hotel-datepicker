@@ -44,7 +44,7 @@ async function build () {
     const config = configs[key]
     console.log(chalk.cyan(`Building ${key}: ${config.output}`))
     const inputOptions = {
-      input: path.join(__dirname, '..', 'src', 'components', 'VueHotelDatePicker.vue'),
+      input: path.join(__dirname, '..', 'src', 'components', 'VueHotelDatepicker.vue'),
       external: [
         '@fortawesome/fontawesome-svg-core',
         '@fortawesome/free-solid-svg-icons',
@@ -64,7 +64,7 @@ async function build () {
         globals(),
         autoExternal(),
         typescript({
-          typescript: require("typescript"),
+          typescript: require('typescript'),
           cacheRoot: path.resolve(`/tmp/.cache_${key}_${process.pid}`)
         }),
         postcss({
@@ -82,7 +82,7 @@ async function build () {
       file: path.join(__dirname, '..', 'dist', config.output),
       format: config.format,
       banner: banner,
-      name: 'vueHotelDatePicker',
+      name: 'VueHotelDatepicker',
       globals: {
         'vue-property-decorator': 'vue-property-decorator'
       }
