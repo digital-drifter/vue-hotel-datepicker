@@ -1,6 +1,6 @@
 {
-  "name": "vue-hotel-datepicker",
-  "author": "Brian Lee",
+  "name": "digital-drifter/vue-hotel-datepicker",
+  "author": "Digital Drifter",
   "version": "0.1.0",
   "homepage": "https://digital-drifter.github.io/vue-hotel-datepicker/",
   "module": "dist/vue-hotel-datepicker.esm.js",
