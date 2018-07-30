@@ -1,4 +1,6 @@
-# vue-hotel-datepicker
+# Vue Hotel Datepicker
+
+Display a date range selector for setting check in and check out dates.
 
 ## Project setup
 ```
