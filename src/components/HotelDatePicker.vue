@@ -41,7 +41,7 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
-  import SearchOverlay from '@/components/SearchOverlay.vue'
+  import SearchOverlay from './SearchOverlay.vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import VueDatepicker from 'vuejs-datepicker'
   import VTooltip from 'v-tooltip'

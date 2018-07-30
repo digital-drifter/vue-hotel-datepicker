@@ -4,6 +4,10 @@
 @import 'overlay';
 @import "modal";
 
+* {
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
 .search--disabled {
   background-color: rgba(238, 238, 238, 1);
 

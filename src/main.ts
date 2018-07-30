@@ -1,6 +1,7 @@
+import '@babel/polyfill'
 import Vue, { CreateElement } from 'vue'
 import App from '@/App.vue'
-import '@/assets/hotel-datepicker.scss'
+import '@/assets/scss/hotel-datepicker.scss'
 
 Vue.config.productionTip = false
 

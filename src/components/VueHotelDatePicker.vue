@@ -26,9 +26,9 @@
   import { IconDefinition, library } from '@fortawesome/fontawesome-svg-core'
   import { faArrowLeft, faCalendar, faSearch, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-  import HotelDatePicker from '@/components/HotelDatePicker.vue'
-  import SearchOverlay from '@/components/SearchOverlay.vue'
-  import ResultsModal from '@/components/ResultsModal.vue'
+  import HotelDatePicker from './HotelDatePicker.vue'
+  import SearchOverlay from './SearchOverlay.vue'
+  import ResultsModal from './ResultsModal.vue'
 
   const icons: { [key: string]: IconDefinition } = {
     ArrowLeft: faArrowLeft,
@@ -58,13 +58,13 @@
     protected searching: boolean = false
 
     @Prop({type: Request, required: true})
-    request: Request
+    protected request: Request
 
     @Prop({type: Date, required: true})
-    startDate: Date
+    protected startDate: Date
 
     @Prop({type: Date, required: true})
-    endDate: Date
+    protected endDate: Date
 
     get range (): { [key: string]: Dayjs } {
       return {

@@ -21,13 +21,13 @@
     public name: string = 'App'
 
     @Prop({type: Date, required: true})
-    startDate: Date
+    protected startDate: Date
 
     @Prop({type: Date, required: true})
-    endDate: Date
+    protected endDate: Date
 
     @Prop({type: String, required: true})
-    url: string
+    protected url: string
 
     get request (): Request {
       return new Request(this.url, {

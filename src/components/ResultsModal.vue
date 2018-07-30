@@ -28,7 +28,7 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
-  import Hotel from '@/components/Hotel.vue'
+  import Hotel from './Hotel.vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
   @Component({

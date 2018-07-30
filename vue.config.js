@@ -33,6 +33,20 @@ const devServer = {
 }
 
 module.exports = {
+  chainWebpack: config => {
+    const inlineLimit = 500000
+
+    config.module
+      .rule('fonts')
+      .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
+      .use('url-loader')
+      .loader('url-loader')
+      .options({
+        limit: inlineLimit,
+        name: path.join('fonts/[name].[hash].[ext]'),
+        mimetype: "application/font-woff"
+      })
+  },
   configureWebpack: {
     devtool: 'cheap-eval-source-map',
     output: {
@@ -60,7 +74,7 @@ module.exports = {
         vue$: 'vue/dist/vue.esm'
       },
       extensions: ['*', '.js', '.json', '.vue', '.ts']
-    }
+    },
   },
   productionSourceMap: true,
   devServer
