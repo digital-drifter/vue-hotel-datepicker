@@ -45,13 +45,19 @@ async function build () {
     console.log(chalk.cyan(`Building ${key}: ${config.output}`))
     const inputOptions = {
       input: path.join(__dirname, '..', 'src', 'components', 'VueHotelDatePicker.vue'),
-      external: ['vue-property-decorator'],
+      external: [
+        '@fortawesome/fontawesome-svg-core',
+        '@fortawesome/free-solid-svg-icons',
+        '@fortawesome/vue-fontawesome',
+        'bootstrap',
+        'vue-property-decorator'
+      ],
       plugins: [
         vue({
           css: true
         }),
         alias({
-          '@': path.resolve('../src/'),
+          '@': './src/',
           vue$: 'vue/dist/vue.esm',
           resolve: ['.js', '.ts', '.vue']
         }),
