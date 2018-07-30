@@ -1,5 +1,7 @@
 # Vue Hotel Datepicker
 
+[![Build Status](https://travis-ci.com/digital-drifter/vue-hotel-datepicker.svg?branch=master)](https://travis-ci.com/digital-drifter/vue-hotel-datepicker)
+
 Datepicker for selecting check in and check out dates.
 
 Built on [vuejs-datepicker](https://github.com/charliekassel/vuejs-datepicker)
