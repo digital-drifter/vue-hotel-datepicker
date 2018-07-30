@@ -1,5 +1,5 @@
 /*!
- * vue-hotel-datepicker v0.1.0
+ * vue-hotel-datepicker v0.1.1
  * (c) 2018-2018 Brian Lee
  * Released under the MIT License.
  */

@@ -1,11 +1,12 @@
+const path = require('path')
+
 module.exports = {
+  rootDir: path.resolve(__dirname),
   moduleFileExtensions: [
     'js',
-    'jsx',
     'json',
     'vue',
-    'ts',
-    'tsx'
+    'ts'
   ],
   transform: {
     '^.+\\.vue$': 'vue-jest',
@@ -15,11 +16,12 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
+  // setupFiles: ['<rootDir>/tests/unit/setup'],
   snapshotSerializers: [
     'jest-serializer-vue'
   ],
   testMatch: [
-    '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)'
+    '**/tests/unit/specs/**/*.spec.(js|ts)|**/__tests__/*.(js|ts)'
   ],
   testURL: 'http://localhost/'
 }

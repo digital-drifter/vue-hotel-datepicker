@@ -18,5 +18,12 @@
         "modules": false
       }
     ]
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/env"
+      ]
+    }
+  }
 }
