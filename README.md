@@ -10,15 +10,19 @@ Built on [vuejs-datepicker](https://github.com/charliekassel/vuejs-datepicker)
 
 # Installation
 
+> This project relies on [Bootstrap 4](https://github.com/twbs/bootstrap) styles.
+
+Via NPM
+
 ```bash
 npm i @digital-drifter/vue-hotel-datepicker
 ```
 
+Via Yarn
+
 ```bash
 yarn add @digital-drifter/vue-hotel-datepicker
 ```
-
-The component relies on Bootstrap 4.
 
 # Usage
 
@@ -34,7 +38,7 @@ Global registration:
 
 ```js
 import Vue from 'vue'
-import VueHotelDatepicker from '@digital-drifter/vue-hotel-datepicker.vue'
+import VueHotelDatepicker from '@digital-drifter/vue-hotel-datepicker'
 
 Vue.component('vue-hotel-datepicker', VueHotelDatepicker)
 ```
@@ -42,7 +46,7 @@ Vue.component('vue-hotel-datepicker', VueHotelDatepicker)
 Local registration:
 
 ```js
-import VueHotelDatepicker from '@digital-drifter/vue-hotel-datepicker.vue'
+import VueHotelDatepicker from '@digital-drifter/vue-hotel-datepicker'
 
 export default {
   components: {
