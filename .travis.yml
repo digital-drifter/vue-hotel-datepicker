@@ -21,7 +21,7 @@ jobs:
 deploy:
   provider: releases
   api_key:
-    secure: fSz2ouBnd+AoozUU2aDIYDVCf5bfjNN/Qs37GWkq/92tmC2AXI1AkSMbFX0pqojMDwn4/mLEXA/J3ChwhbiXhF7ozJTBzsU2ej0tXrMc2ejgxgCS6ZA9K1ThbTq8FhgdbJ9sOVP1oZCmRd0TRBQJ5SvN4/TAvTFVAmrL6zbEFyA653XFyDo8gXOD6LViJndwUcQ58e+ykfNF99iyQhbwSiRNYqIM35nA4/sYhfDT43TbErUkg/6oqXidppIdq803ArrW0yzVogfL3gkwZVuY/cgb31Wbs3JECwecAVnW5DjtQlLC0KPi852izAtNRZsF9jrkXbY1P9/8xp716mtX9MLOYguXYgRpfbaF74KlAvYTS/SFa0SttvZaLxZjt8MZ4ay/2/Umr/Pircikf9+jTUlSYjQmAIQnhBjenkeaivR4ilzWM8mGatDZZkF4Tf32jcd9tST0WfGXOqhjAkIJZuVzhBt59R2i+WqaSzcquVG6XSnv8zKpRmbPYJQMQEW38h/GwE/mU4aX1Bu1m1++NfJq4NFc0J8E3StL7GrK2/yJxIwcoGdj7utt9t0I7JbyLqFw3ypOKBbfdJMCP79pscwHG8OyuxYXo00P74CHLS1OqFAkGgRTmDIMClWo6oO6lFozisAjhyqgbAz3s2oAL9c3T5eUnfGoY4Tkx+hUZCg=
+    secure: $API_KEY
   file: dist/vue-hotel-datepicker.js
   on:
     repo: digital-drifter/vue-hotel-datepicker
