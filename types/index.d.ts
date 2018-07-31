@@ -6,3 +6,10 @@ interface VueHotelDatepicker {
   endDate: typeof Date
   request: typeof Request
 }
+
+interface Period {
+  start?: Date
+  end?: Date
+}
+
+export declare var Period: Period

@@ -1,7 +1,7 @@
 import '@babel/polyfill'
 import Vue, { CreateElement } from 'vue'
 import App from '@/App.vue'
-import '../node_modules/bootstrap/scss/bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 Vue.config.productionTip = false
 

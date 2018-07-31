@@ -2,18 +2,18 @@
     <div class="card">
         <search-overlay :searching="searching"></search-overlay>
         <div class="card-header d-flex flex-row justify-content-between" :style="theme">
-      <span>
-        <font-awesome-icon icon="calendar"></font-awesome-icon>
-        <span class="pl-2 font-weight-bold">{{ title }}</span>
-      </span>
-            <span v-show="checkin || checkout" v-tooltip="{ content: '' }">
-      <font-awesome-icon icon="times" @click="onClear" style="cursor: pointer"></font-awesome-icon>
-      </span>
+            <div>
+                <font-awesome-icon icon="calendar"></font-awesome-icon>
+                <span class="pl-2 font-weight-bold">{{ title }}</span>
+            </div>
+            <div v-show="checkin || checkout" v-tooltip="{ content: '' }">
+                <font-awesome-icon icon="times" @click="onClear" style="cursor: pointer"></font-awesome-icon>
+            </div>
         </div>
         <div class="card-body p-0">
             <div class="d-flex justify-content-center">
-                <vue-datepicker :disabledDates="disabledDates"
-                                :highlighted="highlighted"
+                <vue-datepicker :disabledDates="{ to: startDate, from: endDate }"
+                                :highlighted="{ to: highlighted.start, from: highlighted.end }"
                                 :inline="inline"
                                 @selected="onSelected"
                                 :clear-button="clearButton"
@@ -45,7 +45,8 @@
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import VueDatepicker from 'vuejs-datepicker'
   import VTooltip from 'v-tooltip'
-  import dayjs, { Dayjs } from 'dayjs'
+  import dayjs from 'dayjs'
+  import { Period } from '../../types'
 
   @Component({
     components: {
@@ -67,9 +68,12 @@
   export default class HotelDatePicker extends Vue {
     public name: string = 'HotelDatePicker'
 
-    public selected: { [key: string]: Date | null } = {
-      start: null,
-      end: null
+    /**
+     * The selected checkin and checkout dates.
+     */
+    public selected: Period = {
+      start: undefined,
+      end: undefined
     }
 
     @Prop({type: Boolean, default: true})
@@ -90,11 +94,11 @@
     @Prop({type: String, default: 'MMMM D, YYYY'})
     public format: string
 
-    @Prop({type: Dayjs, required: true})
-    public startDate: Dayjs
+    @Prop({type: Date, required: true})
+    public startDate: Date
 
-    @Prop({type: Dayjs, required: true})
-    public endDate: Dayjs
+    @Prop({type: Date, required: true})
+    public endDate: Date
 
     @Prop({
       type: Object, default: () => ({
@@ -127,17 +131,10 @@
       }
     }
 
-    get disabledDates () {
+    get highlighted (): Period {
       return {
-        to: this.startDate.toDate(),
-        from: this.endDate.toDate()
-      }
-    }
-
-    get highlighted () {
-      return {
-        to: this.checkout,
-        from: this.checkin
+        start: this.checkout,
+        end: this.checkin
       }
     }
 
@@ -166,16 +163,16 @@
     }
 
     protected onClear () {
-      this.checkin = null
-      this.checkout = null
+      this.checkin = undefined
+      this.checkout = undefined
     }
 
     protected onSelected (value: any) {
-      const date = !value ? null : value
+      const date = !value ? undefined : value
 
       switch (true) {
         case (!!this.checkin && !!this.checkout) || (this.checkin && this.checkin >= date):
-          this.checkout = null
+          this.checkout = undefined
           this.checkin = date
           break
         case !this.checkin:
