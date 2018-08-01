@@ -5,46 +5,46 @@ cache:
 git:
   depth: 1
 stages:
-  - lint
-  - test
-  - name: bundle
-    if: branch = release
+- lint
+- test
+- name: bundle
+  if: branch = release
 before_install:
-  - curl -o - -L https://yarnpkg.com/install.sh | bash -s -- --version 1.9.2
-  - export PATH="$HOME/.yarn/bin:$PATH"
+- curl -o - -L https://yarnpkg.com/install.sh | bash -s -- --version 1.9.2
+- export PATH="$HOME/.yarn/bin:$PATH"
 install:
-  - yarn --frozen-lockfile --non-interactive
+- yarn --frozen-lockfile --non-interactive
 jobs:
   include:
   - stage: lint
     script:
-      - yarn run lint
+    - yarn run lint
   - stage: test
     before_script:
-      - yarn global add codecov
+    - yarn global add codecov
     script:
-      - yarn run test:all
+    - yarn run test:all
   - stage: bundle
     script:
-      - yarn run bundle
+    - yarn run bundle
 before_deploy:
-  - git config --local user.name "$GIT_USERNAME"
-  - git config --local user.email "$GIT_EMAIL"
-  - export VERSION=$(npx -c 'echo "$npm_package_version"')
-  - git tag "v$VERSION"
+- git config --local user.name "$GIT_USERNAME"
+- git config --local user.email "$GIT_EMAIL"
+- export VERSION=$(npx -c 'echo "$npm_package_version"')
+- git tag "v$VERSION"
 deploy:
-  - provider: releases
-    skip_cleanup: true
-    file_glob: true
-    api_key:
-      secure: "$GITHUB_API_KEY"
-    file: "dist/vue-hotel-datepicker.*"
-    on:
-      branch: release
-  - provider: npm
-    skip_cleanup: true
-    email: "$GIT_EMAIL"
-    api_key:
-      secure: "$NPM_API_KEY"
-    on:
-      branch: release
+- provider: releases
+  skip_cleanup: true
+  file_glob: true
+  api_key:
+    secure: "$GITHUB_API_KEY"
+  file: "dist/vue-hotel-datepicker.*"
+  on:
+    branch: release
+- provider: npm
+  skip_cleanup: true
+  email: "$GIT_EMAIL"
+  api_key:
+    secure: "$NPM_API_KEY"
+  on:
+    branch: release
