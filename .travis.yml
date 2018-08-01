@@ -18,10 +18,10 @@ jobs:
   - stage: build
     script:
     - yarn run bundle
-deploy:
-  provider: releases
-  api_key:
-    secure: $API_KEY
-  file: dist/vue-hotel-datepicker.js
-  on:
-    repo: digital-drifter/vue-hotel-datepicker
+#deploy:
+#  provider: releases
+#  api_key:
+#    secure: $API_KEY
+#  file: dist/vue-hotel-datepicker.js
+#  on:
+#    repo: digital-drifter/vue-hotel-datepicker
