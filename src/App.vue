@@ -1,10 +1,10 @@
 <template>
     <div id="app">
-        <vue-hotel-datepicker
+        <vue-block-dates
                 :start-date="startDate"
                 :end-date="endDate"
                 :request="request">
-        </vue-hotel-datepicker>
+        </vue-block-dates>
     </div>
 </template>
 

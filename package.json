@@ -1,20 +1,20 @@
 {
-  "name": "@digital-drifter/vue-hotel-datepicker",
+  "name": "@digital-drifter/vue-block-dates",
   "author": "Digital Drifter",
   "version": "0.1.1",
-  "homepage": "https://digital-drifter.github.io/vue-hotel-datepicker/",
-  "module": "dist/vue-hotel-datepicker.esm.js",
-  "main": "dist/vue-hotel-datepicker.js",
-  "unpkg": "dist/vue-hotel-datepicker.min.js",
+  "homepage": "https://digital-drifter.github.io/vue-block-dates/",
+  "module": "dist/vue-block-dates.esm.js",
+  "main": "dist/vue-block-dates.js",
+  "unpkg": "dist/vue-block-dates.min.js",
   "private": false,
   "typeScriptVersion": "2.9.2",
   "sideEffects": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/digital-drifter/vue-hotel-datepicker"
+    "url": "https://github.com/digital-drifter/vue-block-dates"
   },
   "bugs": {
-    "url": "https://github.com/digital-drifter/vue-hotel-datepicker/issues"
+    "url": "https://github.com/digital-drifter/vue-block-dates/issues"
   },
   "files": [
     "src",
@@ -70,6 +70,7 @@
     "chalk": "^2.4.1",
     "compression-webpack-plugin": "^1.1.11",
     "coveralls": "^3.0.2",
+    "danger": "^3.8.3",
     "dotenv": "^6.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "happypack": "^5.0.0",

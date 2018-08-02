@@ -38,7 +38,7 @@ deploy:
   file_glob: true
   api_key:
     secure: $GITHUB_API_KEY
-  file: "dist/vue-hotel-datepicker.*"
+  file: "dist/vue-block-dates.*"
   on:
     branch: release
 - provider: npm

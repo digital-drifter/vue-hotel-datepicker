@@ -106,5 +106,5 @@
 </script>
 
 <style type="text/scss" lang="sass">
-    @import "../assets/scss/vue-hotel-datepicker.scss"
+    @import "../assets/scss/vue-block-dates.scss"
 </style>

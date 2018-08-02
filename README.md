@@ -1,29 +1,30 @@
-# Vue Hotel Datepicker
+# Vue Block Dates
 
-[![Build Status](https://travis-ci.com/digital-drifter/vue-hotel-datepicker.svg?branch=master)](https://travis-ci.com/digital-drifter/vue-hotel-datepicker)
+[![Build Status](https://travis-ci.com/digital-drifter/vue-block-dates.svg?branch=master)](https://travis-ci.com/digital-drifter/vue-block-dates)
 
-Datepicker for selecting check in and check out dates.
+Display blocks of date ranges with selectable periods. Hotel checkin/checkout, flight arrival/departure, vacation start/end, etc.
 
-Built on [vuejs-datepicker](https://github.com/charliekassel/vuejs-datepicker)
+### Built on 
+
+- [vuejs-datepicker](https://github.com/charliekassel/vuejs-datepicker)
+- [Bootstrap 4](https://github.com/twbs/bootstrap) (styles only)
 
 <p align="center">
-  <img src="https://github.com/digital-drifter/vue-hotel-datepicker/raw/master/docs/screenshot.png">
+  <img src="https://github.com/digital-drifter/vue-block-dates/raw/master/docs/screenshot.png">
 </p>
 
 # Installation
 
-> This project relies on [Bootstrap 4](https://github.com/twbs/bootstrap) styles.
-
 Via NPM
 
 ```bash
-npm i @digital-drifter/vue-hotel-datepicker
+npm i @digital-drifter/vue-block-dates
 ```
 
 Via Yarn
 
 ```bash
-yarn add @digital-drifter/vue-hotel-datepicker
+yarn add @digital-drifter/vue-block-dates
 ```
 
 # Usage
@@ -40,19 +41,19 @@ Global registration:
 
 ```js
 import Vue from 'vue'
-import VueHotelDatepicker from '@digital-drifter/vue-hotel-datepicker'
+import VueBlockDates from '@digital-drifter/vue-block-dates'
 
-Vue.component('vue-hotel-datepicker', VueHotelDatepicker)
+Vue.component('vue-block-dates', VueBlockDates)
 ```
 
 Local registration:
 
 ```js
-import VueHotelDatepicker from '@digital-drifter/vue-hotel-datepicker'
+import VueBlockDates from '@digital-drifter/vue-block-dates'
 
 export default {
   components: {
-    VueHotelDatepicker
+    VueBlockDates
   },
   data () {
     return {
@@ -71,10 +72,13 @@ Add it to the template:
 
 ```html
 <template>
-  <vue-hotel-datepicker :start-date="startDate" :end-date="endDate" :request="request"></vue-hotel-datepicker>
+  <vue-block-dates :start-date="startDate" :end-date="endDate" :request="request"></vue-block-dates>
 </template>
 ```
 
+# Development
+
+This project was created using [Vue CLI 3](https://cli.vuejs.org/)
 
 ## Project setup
 ```
