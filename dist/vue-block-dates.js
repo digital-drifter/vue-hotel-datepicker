@@ -1,17 +1,17 @@
 /*!
- * vue-hotel-datepicker v0.1.1
+ * vue-block-dates v0.1.1
  * (c) 2018-2018 Brian Lee
  * Released under the MIT License.
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue-property-decorator'), require('@fortawesome/vue-fontawesome'), require('vuejs-datepicker'), require('v-tooltip'), require('dayjs'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/free-solid-svg-icons')) :
     typeof define === 'function' && define.amd ? define(['vue-property-decorator', '@fortawesome/vue-fontawesome', 'vuejs-datepicker', 'v-tooltip', 'dayjs', '@fortawesome/fontawesome-svg-core', '@fortawesome/free-solid-svg-icons'], factory) :
-    (global.VueHotelDatepicker = factory(global['vue-property-decorator'],null,null,null,null,null,null));
+    (global.VueBlockDates = factory(global['vue-property-decorator'],global.vueFontawesome,global.VueDatepicker,global.VTooltip,global.dayjs,global.fontawesomeSvgCore,global.freeSolidSvgIcons));
 }(this, (function (vuePropertyDecorator,vueFontawesome,VueDatepicker,VTooltip,dayjs,fontawesomeSvgCore,freeSolidSvgIcons) { 'use strict';
 
     VueDatepicker = VueDatepicker && VueDatepicker.hasOwnProperty('default') ? VueDatepicker['default'] : VueDatepicker;
     VTooltip = VTooltip && VTooltip.hasOwnProperty('default') ? VTooltip['default'] : VTooltip;
-    var dayjs__default = 'default' in dayjs ? dayjs['default'] : dayjs;
+    dayjs = dayjs && dayjs.hasOwnProperty('default') ? dayjs['default'] : dayjs;
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -90,14 +90,14 @@
         }
     }
 
-    var SearchOverlay = /** @class */ (function (_super) {
-        __extends(SearchOverlay, _super);
-        function SearchOverlay() {
+    var Overlay = /** @class */ (function (_super) {
+        __extends(Overlay, _super);
+        function Overlay() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.name = 'SearchOverlay';
+            _this.name = 'Overlay';
             return _this;
         }
-        Object.defineProperty(SearchOverlay.prototype, "style", {
+        Object.defineProperty(Overlay.prototype, "style", {
             get: function () {
                 return {
                     position: 'absolute',
@@ -116,15 +116,15 @@
         __decorate([
             vuePropertyDecorator.Prop({ type: Boolean, default: false }),
             __metadata("design:type", Boolean)
-        ], SearchOverlay.prototype, "searching", void 0);
-        SearchOverlay = __decorate([
+        ], Overlay.prototype, "searching", void 0);
+        Overlay = __decorate([
             vuePropertyDecorator.Component
-        ], SearchOverlay);
-        return SearchOverlay;
+        ], Overlay);
+        return Overlay;
     }(vuePropertyDecorator.Vue));
 
     /* script */
-                var __vue_script__ = SearchOverlay;
+                var __vue_script__ = Overlay;
                 
     /* template */
     var __vue_render__ = function() {
@@ -186,9 +186,8 @@
       ) {
         var component = (typeof script === 'function' ? script.options : script) || {};
 
-        {
-          component.__file = "/var/workspace/projects/vue-hotel-datepicker/src/components/SearchOverlay.vue";
-        }
+        // For security concerns, we use only base name in production mode.
+        component.__file = "/var/workspace/projects/vue-date-blocks/src/components/search/Overlay.vue";
 
         if (!component.render) {
           component.render = template.render;
@@ -263,7 +262,7 @@
       
 
       
-      var SearchOverlay$1 = __vue_normalize__(
+      var Overlay$1 = __vue_normalize__(
         { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
         __vue_inject_styles__,
         __vue_script__,
@@ -274,46 +273,49 @@
         undefined
       );
 
-    var HotelDatePicker = /** @class */ (function (_super) {
-        __extends(HotelDatePicker, _super);
-        function HotelDatePicker() {
+    var DatePicker = /** @class */ (function (_super) {
+        __extends(DatePicker, _super);
+        function DatePicker() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.name = 'HotelDatePicker';
+            _this.name = 'DatePicker';
+            /**
+             * The selected checkin and checkout dates.
+             */
             _this.selected = {
-                start: null,
-                end: null
+                start: undefined,
+                end: undefined
             };
             return _this;
         }
-        Object.defineProperty(HotelDatePicker.prototype, "cursor", {
+        Object.defineProperty(DatePicker.prototype, "cursor", {
             get: function () {
                 return !this.searching && this.checkin && this.checkout ? 'pointer' : 'not-allowed';
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(HotelDatePicker.prototype, "searchIcon", {
+        Object.defineProperty(DatePicker.prototype, "searchIcon", {
             get: function () {
                 return this.searching ? 'spinner' : 'search';
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(HotelDatePicker.prototype, "searchText", {
+        Object.defineProperty(DatePicker.prototype, "searchText", {
             get: function () {
                 return this.searching ? 'Searching...' : 'Search';
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(HotelDatePicker.prototype, "searchDisabled", {
+        Object.defineProperty(DatePicker.prototype, "searchDisabled", {
             get: function () {
                 return !(this.checkin && this.checkout);
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(HotelDatePicker.prototype, "searchStyle", {
+        Object.defineProperty(DatePicker.prototype, "searchStyle", {
             get: function () {
                 return {
                     color: this.searchDisabled ? 'grey' : 'rgba(236,239,241,1)',
@@ -323,27 +325,17 @@
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(HotelDatePicker.prototype, "disabledDates", {
+        Object.defineProperty(DatePicker.prototype, "highlighted", {
             get: function () {
                 return {
-                    to: this.startDate.toDate(),
-                    from: this.endDate.toDate()
+                    start: this.checkout,
+                    end: this.checkin
                 };
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(HotelDatePicker.prototype, "highlighted", {
-            get: function () {
-                return {
-                    to: this.checkout,
-                    from: this.checkin
-                };
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(HotelDatePicker.prototype, "checkin", {
+        Object.defineProperty(DatePicker.prototype, "checkin", {
             get: function () {
                 return this.selected.start;
             },
@@ -353,7 +345,7 @@
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(HotelDatePicker.prototype, "checkout", {
+        Object.defineProperty(DatePicker.prototype, "checkout", {
             get: function () {
                 return this.selected.end;
             },
@@ -363,25 +355,25 @@
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(HotelDatePicker.prototype, "search", {
+        Object.defineProperty(DatePicker.prototype, "search", {
             get: function () {
                 return this.$refs.search;
             },
             enumerable: true,
             configurable: true
         });
-        HotelDatePicker.prototype.onMouseover = function (event) {
+        DatePicker.prototype.onMouseover = function (event) {
             event.target.style.cursor = this.cursor;
         };
-        HotelDatePicker.prototype.onClear = function () {
-            this.checkin = null;
-            this.checkout = null;
+        DatePicker.prototype.onClear = function () {
+            this.checkin = undefined;
+            this.checkout = undefined;
         };
-        HotelDatePicker.prototype.onSelected = function (value) {
-            var date = !value ? null : value;
+        DatePicker.prototype.onSelected = function (value) {
+            var date = !value ? undefined : value;
             switch (true) {
                 case (!!this.checkin && !!this.checkout) || (this.checkin && this.checkin >= date):
-                    this.checkout = null;
+                    this.checkout = undefined;
                     this.checkin = date;
                     break;
                 case !this.checkin:
@@ -394,13 +386,13 @@
             this.$emit('checkout', this.checkout);
             this.toggleSearchDisabled();
         };
-        HotelDatePicker.prototype.onSearch = function () {
+        DatePicker.prototype.onSearch = function () {
             if (this.searching || this.searchDisabled) {
                 return false;
             }
             this.$emit('search', { checkin: this.checkin, checkout: this.checkout });
         };
-        HotelDatePicker.prototype.toggleSearchDisabled = function () {
+        DatePicker.prototype.toggleSearchDisabled = function () {
             if (this.searchDisabled) {
                 this.search.classList.add('search--disabled');
             }
@@ -411,35 +403,35 @@
         __decorate([
             vuePropertyDecorator.Prop({ type: Boolean, default: true }),
             __metadata("design:type", Boolean)
-        ], HotelDatePicker.prototype, "bootstrapStyling", void 0);
+        ], DatePicker.prototype, "bootstrapStyling", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ type: Boolean, default: false }),
             __metadata("design:type", Boolean)
-        ], HotelDatePicker.prototype, "searching", void 0);
+        ], DatePicker.prototype, "searching", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ type: Boolean, default: false }),
             __metadata("design:type", Boolean)
-        ], HotelDatePicker.prototype, "clearButton", void 0);
+        ], DatePicker.prototype, "clearButton", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ type: Boolean, default: true }),
             __metadata("design:type", Boolean)
-        ], HotelDatePicker.prototype, "inline", void 0);
+        ], DatePicker.prototype, "inline", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ type: String, default: 'Select Dates' }),
             __metadata("design:type", String)
-        ], HotelDatePicker.prototype, "title", void 0);
+        ], DatePicker.prototype, "title", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ type: String, default: 'MMMM D, YYYY' }),
             __metadata("design:type", String)
-        ], HotelDatePicker.prototype, "format", void 0);
+        ], DatePicker.prototype, "format", void 0);
         __decorate([
-            vuePropertyDecorator.Prop({ type: dayjs.Dayjs, required: true }),
-            __metadata("design:type", dayjs.Dayjs)
-        ], HotelDatePicker.prototype, "startDate", void 0);
+            vuePropertyDecorator.Prop({ type: Date, required: true }),
+            __metadata("design:type", Date)
+        ], DatePicker.prototype, "startDate", void 0);
         __decorate([
-            vuePropertyDecorator.Prop({ type: dayjs.Dayjs, required: true }),
-            __metadata("design:type", dayjs.Dayjs)
-        ], HotelDatePicker.prototype, "endDate", void 0);
+            vuePropertyDecorator.Prop({ type: Date, required: true }),
+            __metadata("design:type", Date)
+        ], DatePicker.prototype, "endDate", void 0);
         __decorate([
             vuePropertyDecorator.Prop({
                 type: Object, default: function () { return ({
@@ -448,12 +440,12 @@
                 }); }
             }),
             __metadata("design:type", Object)
-        ], HotelDatePicker.prototype, "theme", void 0);
-        HotelDatePicker = __decorate([
+        ], DatePicker.prototype, "theme", void 0);
+        DatePicker = __decorate([
             vuePropertyDecorator.Component({
                 components: {
                     FontAwesomeIcon: vueFontawesome.FontAwesomeIcon,
-                    SearchOverlay: SearchOverlay$1,
+                    Overlay: Overlay$1,
                     VueDatepicker: VueDatepicker
                 },
                 directives: {
@@ -461,17 +453,17 @@
                 },
                 filters: {
                     formatDate: function (value, format) {
-                        var date = dayjs__default(value);
+                        var date = dayjs(value);
                         return date.isValid() ? date.format(format) : 'N/A';
                     }
                 }
             })
-        ], HotelDatePicker);
-        return HotelDatePicker;
+        ], DatePicker);
+        return DatePicker;
     }(vuePropertyDecorator.Vue));
 
     /* script */
-                var __vue_script__$1 = HotelDatePicker;
+                var __vue_script__$1 = DatePicker;
                 
     /* template */
     var __vue_render__$1 = function() {
@@ -482,7 +474,7 @@
         "div",
         { staticClass: "card" },
         [
-          _c("search-overlay", { attrs: { searching: _vm.searching } }),
+          _c("overlay", { attrs: { searching: _vm.searching } }),
           _vm._v(" "),
           _c(
             "div",
@@ -492,7 +484,7 @@
             },
             [
               _c(
-                "span",
+                "div",
                 [
                   _c("font-awesome-icon", { attrs: { icon: "calendar" } }),
                   _vm._v(" "),
@@ -504,7 +496,7 @@
               ),
               _vm._v(" "),
               _c(
-                "span",
+                "div",
                 {
                   directives: [
                     {
@@ -540,8 +532,11 @@
               [
                 _c("vue-datepicker", {
                   attrs: {
-                    disabledDates: _vm.disabledDates,
-                    highlighted: _vm.highlighted,
+                    disabledDates: { to: _vm.startDate, from: _vm.endDate },
+                    highlighted: {
+                      to: _vm.highlighted.start,
+                      from: _vm.highlighted.end
+                    },
                     inline: _vm.inline,
                     "clear-button": _vm.clearButton,
                     "bootstrap-styling": _vm.bootstrapStyling
@@ -634,9 +629,8 @@
       ) {
         var component = (typeof script === 'function' ? script.options : script) || {};
 
-        {
-          component.__file = "/var/workspace/projects/vue-hotel-datepicker/src/components/HotelDatePicker.vue";
-        }
+        // For security concerns, we use only base name in production mode.
+        component.__file = "/var/workspace/projects/vue-date-blocks/src/components/DatePicker.vue";
 
         if (!component.render) {
           component.render = template.render;
@@ -711,7 +705,7 @@
       
 
       
-      var HotelDatePicker$1 = __vue_normalize__$1(
+      var DatePicker$1 = __vue_normalize__$1(
         { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
         __vue_inject_styles__$1,
         __vue_script__$1,
@@ -722,40 +716,40 @@
         undefined
       );
 
-    var Hotel = /** @class */ (function (_super) {
-        __extends(Hotel, _super);
-        function Hotel() {
+    var Result = /** @class */ (function (_super) {
+        __extends(Result, _super);
+        function Result() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         __decorate([
             vuePropertyDecorator.Prop({ required: true }),
             __metadata("design:type", String)
-        ], Hotel.prototype, "name", void 0);
+        ], Result.prototype, "name", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ required: false, default: null }),
             __metadata("design:type", String)
-        ], Hotel.prototype, "description", void 0);
+        ], Result.prototype, "description", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ required: true }),
             __metadata("design:type", Number)
-        ], Hotel.prototype, "rate", void 0);
+        ], Result.prototype, "rate", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ required: false, default: null }),
             __metadata("design:type", String)
-        ], Hotel.prototype, "image", void 0);
+        ], Result.prototype, "image", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ required: false, default: null }),
             __metadata("design:type", String)
-        ], Hotel.prototype, "imageAlt", void 0);
+        ], Result.prototype, "imageAlt", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ required: false, default: null }),
             __metadata("design:type", String)
-        ], Hotel.prototype, "website", void 0);
+        ], Result.prototype, "website", void 0);
         __decorate([
             vuePropertyDecorator.Prop({ required: false, default: null }),
             __metadata("design:type", String)
-        ], Hotel.prototype, "cancellationPolicy", void 0);
-        Hotel = __decorate([
+        ], Result.prototype, "cancellationPolicy", void 0);
+        Result = __decorate([
             vuePropertyDecorator.Component({
                 filters: {
                     nightly: function (value) {
@@ -763,12 +757,12 @@
                     }
                 }
             })
-        ], Hotel);
-        return Hotel;
+        ], Result);
+        return Result;
     }(vuePropertyDecorator.Vue));
 
     /* script */
-                var __vue_script__$2 = Hotel;
+                var __vue_script__$2 = Result;
                 
     /* template */
     var __vue_render__$2 = function() {
@@ -823,9 +817,8 @@
       ) {
         var component = (typeof script === 'function' ? script.options : script) || {};
 
-        {
-          component.__file = "/var/workspace/projects/vue-hotel-datepicker/src/components/Hotel.vue";
-        }
+        // For security concerns, we use only base name in production mode.
+        component.__file = "/var/workspace/projects/vue-date-blocks/src/components/search/Result.vue";
 
         if (!component.render) {
           component.render = template.render;
@@ -900,7 +893,7 @@
       
 
       
-      var Hotel$1 = __vue_normalize__$2(
+      var Result$1 = __vue_normalize__$2(
         { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
         __vue_inject_styles__$2,
         __vue_script__$2,
@@ -911,27 +904,27 @@
         undefined
       );
 
-    var ResultsModal = /** @class */ (function (_super) {
-        __extends(ResultsModal, _super);
-        function ResultsModal() {
+    var Modal = /** @class */ (function (_super) {
+        __extends(Modal, _super);
+        function Modal() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.name = 'ResultsModal';
+            _this.name = 'Modal';
             return _this;
         }
-        ResultsModal.prototype.onMouseover = function (event) {
+        Modal.prototype.onMouseover = function (event) {
             event.target.style.cursor = 'pointer';
         };
-        ResultsModal.prototype.onClose = function () {
+        Modal.prototype.onClose = function () {
             this.$emit('close');
         };
         __decorate([
             vuePropertyDecorator.Prop({ type: Array, required: true }),
             __metadata("design:type", Array)
-        ], ResultsModal.prototype, "items", void 0);
-        ResultsModal = __decorate([
+        ], Modal.prototype, "items", void 0);
+        Modal = __decorate([
             vuePropertyDecorator.Component({
                 components: {
-                    Hotel: Hotel$1,
+                    Result: Result$1,
                     FontAwesomeIcon: vueFontawesome.FontAwesomeIcon
                 },
                 filters: {
@@ -941,12 +934,12 @@
                     }
                 }
             })
-        ], ResultsModal);
-        return ResultsModal;
+        ], Modal);
+        return Modal;
     }(vuePropertyDecorator.Vue));
 
     /* script */
-                var __vue_script__$3 = ResultsModal;
+                var __vue_script__$3 = Modal;
                 
     /* template */
     var __vue_render__$3 = function() {
@@ -986,7 +979,7 @@
                 "div",
                 { staticClass: "modal-body" },
                 _vm._l(_vm.items, function(item, index) {
-                  return _c("hotel", {
+                  return _c("result", {
                     key: index,
                     attrs: {
                       name: item.name,
@@ -1021,9 +1014,8 @@
       ) {
         var component = (typeof script === 'function' ? script.options : script) || {};
 
-        {
-          component.__file = "/var/workspace/projects/vue-hotel-datepicker/src/components/ResultsModal.vue";
-        }
+        // For security concerns, we use only base name in production mode.
+        component.__file = "/var/workspace/projects/vue-date-blocks/src/components/search/Modal.vue";
 
         if (!component.render) {
           component.render = template.render;
@@ -1098,7 +1090,7 @@
       
 
       
-      var ResultsModal$1 = __vue_normalize__$3(
+      var Modal$1 = __vue_normalize__$3(
         { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
         __vue_inject_styles__$3,
         __vue_script__$3,
@@ -1127,20 +1119,23 @@
             var _this = _super !== null && _super.apply(this, arguments) || this;
             _this.name = 'VueHotelDatepicker';
             _this.results = [];
+            /**
+             * Control search overlay, disabling of button.
+             */
             _this.searching = false;
             return _this;
         }
-        Object.defineProperty(VueHotelDatepicker.prototype, "range", {
+        Object.defineProperty(VueHotelDatepicker.prototype, "open", {
             get: function () {
-                return {
-                    start: dayjs__default(this.startDate),
-                    end: dayjs__default(this.endDate)
-                };
+                return !!this.results.length;
             },
             enumerable: true,
             configurable: true
         });
-        VueHotelDatepicker.prototype.onSearch = function (dates) {
+        /**
+         * Send a fetch request using the provided Request object.
+         */
+        VueHotelDatepicker.prototype.onSearch = function (period) {
             return __awaiter(this, void 0, void 0, function () {
                 var _this = this;
                 return __generator(this, function (_a) {
@@ -1160,9 +1155,7 @@
                                 })
                                     .then(function (data) {
                                     _this.searching = !_this.searching;
-                                    if (Array.isArray(data)) {
-                                        _this.results = data;
-                                    }
+                                    _this.results.splice(0, Array.isArray(data) ? data.length : 0, Array.isArray(data) ? data : []);
                                 })];
                         case 1:
                             _a.sent();
@@ -1171,6 +1164,9 @@
                 });
             });
         };
+        /**
+         * Clear the results array, in turn closing the modal.
+         */
         VueHotelDatepicker.prototype.onClose = function () {
             this.results.splice(0, this.results.length);
         };
@@ -1189,10 +1185,10 @@
         VueHotelDatepicker = __decorate([
             vuePropertyDecorator.Component({
                 components: {
-                    HotelDatePicker: HotelDatePicker$1,
-                    SearchOverlay: SearchOverlay$1,
+                    DatePicker: DatePicker$1,
+                    Overlay: Overlay$1,
                     FontAwesomeIcon: vueFontawesome.FontAwesomeIcon,
-                    ResultsModal: ResultsModal$1
+                    Modal: Modal$1
                 }
             })
         ], VueHotelDatepicker);
@@ -1215,18 +1211,18 @@
             "transition-group",
             { attrs: { name: "fade", mode: "out-in" } },
             [
-              !_vm.results.length
-                ? _c("hotel-date-picker", {
+              !_vm.open
+                ? _c("date-picker", {
                     key: "date-picker",
                     attrs: {
                       searching: _vm.searching,
-                      "start-date": _vm.range.start,
-                      "end-date": _vm.range.end
+                      "start-date": _vm.startDate,
+                      "end-date": _vm.endDate
                     },
                     on: { search: _vm.onSearch }
                   })
                 : _vm._t("results", [
-                    _c("results-modal", {
+                    _c("modal", {
                       key: "results-list",
                       attrs: { items: _vm.results },
                       on: { close: _vm.onClose }
@@ -1245,7 +1241,7 @@
       /* style */
       var __vue_inject_styles__$4 = function (inject) {
         if (!inject) { return }
-        inject("data-v-acf2acbe_0", { source: "\n.tooltip {\n  display: block !important;\n  z-index: 10000;\n}\n.tooltip .tooltip-inner {\n    background: black;\n    color: white;\n    border-radius: 16px;\n    padding: 5px 10px 4px;\n}\n.tooltip .tooltip-arrow {\n    width: 0;\n    height: 0;\n    position: absolute;\n    margin: 5px;\n    border: solid black;\n    z-index: 1;\n}\n.tooltip[x-placement^='top'] {\n    margin-bottom: 5px;\n}\n.tooltip[x-placement^='top'] .tooltip-arrow {\n      border-width: 5px 5px 0 5px;\n      border-left-color: transparent !important;\n      border-right-color: transparent !important;\n      border-bottom-color: transparent !important;\n      bottom: -5px;\n      left: calc(50% - 5px);\n      margin-top: 0;\n      margin-bottom: 0;\n}\n.tooltip[x-placement^='bottom'] {\n    margin-top: 5px;\n}\n.tooltip[x-placement^='bottom'] .tooltip-arrow {\n      border-width: 0 5px 5px 5px;\n      border-left-color: transparent !important;\n      border-right-color: transparent !important;\n      border-top-color: transparent !important;\n      top: -5px;\n      left: calc(50% - 5px);\n      margin-top: 0;\n      margin-bottom: 0;\n}\n.tooltip[x-placement^='right'] {\n    margin-left: 5px;\n}\n.tooltip[x-placement^='right'] .tooltip-arrow {\n      border-width: 5px 5px 5px 0;\n      border-left-color: transparent !important;\n      border-top-color: transparent !important;\n      border-bottom-color: transparent !important;\n      left: -5px;\n      top: calc(50% - 5px);\n      margin-left: 0;\n      margin-right: 0;\n}\n.tooltip[x-placement^='left'] {\n    margin-right: 5px;\n}\n.tooltip[x-placement^='left'] .tooltip-arrow {\n      border-width: 5px 0 5px 5px;\n      border-top-color: transparent !important;\n      border-right-color: transparent !important;\n      border-bottom-color: transparent !important;\n      right: -5px;\n      top: calc(50% - 5px);\n      margin-left: 0;\n      margin-right: 0;\n}\n.tooltip.popover .popover-inner {\n    background: #f9f9f9;\n    color: black;\n    padding: 24px;\n    border-radius: 5px;\n    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);\n}\n.tooltip.popover .popover-arrow {\n    border-color: #f9f9f9;\n}\n.tooltip[aria-hidden='true'] {\n    visibility: hidden;\n    opacity: 0;\n    transition: opacity 0.15s, visibility 0.15s;\n}\n.tooltip[aria-hidden='false'] {\n    visibility: visible;\n    opacity: 1;\n    transition: opacity 0.15s;\n}\n.sk-cube-grid {\n  width: 40px;\n  height: 40px;\n}\n.sk-cube-grid .sk-cube {\n  width: 33%;\n  height: 33%;\n  background-color: #009688;\n  float: left;\n  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\n  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\n}\n.sk-cube-grid .sk-cube1 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n.sk-cube-grid .sk-cube2 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s;\n}\n.sk-cube-grid .sk-cube3 {\n  -webkit-animation-delay: 0.4s;\n  animation-delay: 0.4s;\n}\n.sk-cube-grid .sk-cube4 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s;\n}\n.sk-cube-grid .sk-cube5 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n.sk-cube-grid .sk-cube6 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s;\n}\n.sk-cube-grid .sk-cube7 {\n  -webkit-animation-delay: 0s;\n  animation-delay: 0s;\n}\n.sk-cube-grid .sk-cube8 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s;\n}\n.sk-cube-grid .sk-cube9 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n@-webkit-keyframes sk-cubeGridScaleDelay {\n0%,\n  70%,\n  100% {\n    -webkit-transform: scale3D(1, 1, 1);\n    transform: scale3D(1, 1, 1);\n}\n35% {\n    -webkit-transform: scale3D(0, 0, 1);\n    transform: scale3D(0, 0, 1);\n}\n}\n@keyframes sk-cubeGridScaleDelay {\n0%,\n  70%,\n  100% {\n    -webkit-transform: scale3D(1, 1, 1);\n    transform: scale3D(1, 1, 1);\n}\n35% {\n    -webkit-transform: scale3D(0, 0, 1);\n    transform: scale3D(0, 0, 1);\n}\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: flex;\n  flex-direction: column;\n}\n.modal-container {\n  width: 500px;\n  margin: 0 auto;\n  background-color: #fff;\n  border-radius: 2px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header {\n  border: none !important;\n}\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-body {\n  margin: 0;\n  padding: 0;\n  max-height: 60vh;\n  overflow-y: auto;\n}\n.modal-body div.card-text {\n    font-size: .6rem;\n}\n.modal-default-button {\n  float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n* {\n  border-radius: 0 !important;\n  font-family: \"Merriweather Sans\", sans-serif;\n}\n.search--disabled {\n  background-color: #eeeeee;\n  -webkit-transition: background-color 600ms linear;\n  -moz-transition: background-color 600ms linear;\n  -o-transition: background-color 600ms linear;\n  -ms-transition: background-color 600ms linear;\n  transition: background-color 600ms linear;\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n\n/*# sourceMappingURL=VueHotelDatepicker.vue.map */", map: {"version":3,"sources":["VueHotelDatepicker.vue","/var/workspace/projects/vue-hotel-datepicker/src/components/VueHotelDatepicker.vue"],"names":[],"mappings":"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","file":"VueHotelDatepicker.vue","sourcesContent":[".tooltip {\n  display: block !important;\n  z-index: 10000; }\n  .tooltip .tooltip-inner {\n    background: black;\n    color: white;\n    border-radius: 16px;\n    padding: 5px 10px 4px; }\n  .tooltip .tooltip-arrow {\n    width: 0;\n    height: 0;\n    position: absolute;\n    margin: 5px;\n    border: solid black;\n    z-index: 1; }\n  .tooltip[x-placement^='top'] {\n    margin-bottom: 5px; }\n    .tooltip[x-placement^='top'] .tooltip-arrow {\n      border-width: 5px 5px 0 5px;\n      border-left-color: transparent !important;\n      border-right-color: transparent !important;\n      border-bottom-color: transparent !important;\n      bottom: -5px;\n      left: calc(50% - 5px);\n      margin-top: 0;\n      margin-bottom: 0; }\n  .tooltip[x-placement^='bottom'] {\n    margin-top: 5px; }\n    .tooltip[x-placement^='bottom'] .tooltip-arrow {\n      border-width: 0 5px 5px 5px;\n      border-left-color: transparent !important;\n      border-right-color: transparent !important;\n      border-top-color: transparent !important;\n      top: -5px;\n      left: calc(50% - 5px);\n      margin-top: 0;\n      margin-bottom: 0; }\n  .tooltip[x-placement^='right'] {\n    margin-left: 5px; }\n    .tooltip[x-placement^='right'] .tooltip-arrow {\n      border-width: 5px 5px 5px 0;\n      border-left-color: transparent !important;\n      border-top-color: transparent !important;\n      border-bottom-color: transparent !important;\n      left: -5px;\n      top: calc(50% - 5px);\n      margin-left: 0;\n      margin-right: 0; }\n  .tooltip[x-placement^='left'] {\n    margin-right: 5px; }\n    .tooltip[x-placement^='left'] .tooltip-arrow {\n      border-width: 5px 0 5px 5px;\n      border-top-color: transparent !important;\n      border-right-color: transparent !important;\n      border-bottom-color: transparent !important;\n      right: -5px;\n      top: calc(50% - 5px);\n      margin-left: 0;\n      margin-right: 0; }\n  .tooltip.popover .popover-inner {\n    background: #f9f9f9;\n    color: black;\n    padding: 24px;\n    border-radius: 5px;\n    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1); }\n  .tooltip.popover .popover-arrow {\n    border-color: #f9f9f9; }\n  .tooltip[aria-hidden='true'] {\n    visibility: hidden;\n    opacity: 0;\n    transition: opacity 0.15s, visibility 0.15s; }\n  .tooltip[aria-hidden='false'] {\n    visibility: visible;\n    opacity: 1;\n    transition: opacity 0.15s; }\n\n.sk-cube-grid {\n  width: 40px;\n  height: 40px; }\n\n.sk-cube-grid .sk-cube {\n  width: 33%;\n  height: 33%;\n  background-color: #009688;\n  float: left;\n  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\n  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; }\n\n.sk-cube-grid .sk-cube1 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s; }\n\n.sk-cube-grid .sk-cube2 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s; }\n\n.sk-cube-grid .sk-cube3 {\n  -webkit-animation-delay: 0.4s;\n  animation-delay: 0.4s; }\n\n.sk-cube-grid .sk-cube4 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s; }\n\n.sk-cube-grid .sk-cube5 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s; }\n\n.sk-cube-grid .sk-cube6 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s; }\n\n.sk-cube-grid .sk-cube7 {\n  -webkit-animation-delay: 0s;\n  animation-delay: 0s; }\n\n.sk-cube-grid .sk-cube8 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s; }\n\n.sk-cube-grid .sk-cube9 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s; }\n\n@-webkit-keyframes sk-cubeGridScaleDelay {\n  0%,\n  70%,\n  100% {\n    -webkit-transform: scale3D(1, 1, 1);\n    transform: scale3D(1, 1, 1); }\n  35% {\n    -webkit-transform: scale3D(0, 0, 1);\n    transform: scale3D(0, 0, 1); } }\n\n@keyframes sk-cubeGridScaleDelay {\n  0%,\n  70%,\n  100% {\n    -webkit-transform: scale3D(1, 1, 1);\n    transform: scale3D(1, 1, 1); }\n  35% {\n    -webkit-transform: scale3D(0, 0, 1);\n    transform: scale3D(0, 0, 1); } }\n\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease; }\n\n.modal-wrapper {\n  display: flex;\n  flex-direction: column; }\n\n.modal-container {\n  width: 500px;\n  margin: 0 auto;\n  background-color: #fff;\n  border-radius: 2px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif; }\n\n.modal-header {\n  border: none !important; }\n\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983; }\n\n.modal-body {\n  margin: 0;\n  padding: 0;\n  max-height: 60vh;\n  overflow-y: auto; }\n  .modal-body div.card-text {\n    font-size: .6rem; }\n\n.modal-default-button {\n  float: right; }\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0; }\n\n.modal-leave-active {\n  opacity: 0; }\n\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1); }\n\n* {\n  border-radius: 0 !important;\n  font-family: \"Merriweather Sans\", sans-serif; }\n\n.search--disabled {\n  background-color: #eeeeee;\n  -webkit-transition: background-color 600ms linear;\n  -moz-transition: background-color 600ms linear;\n  -o-transition: background-color 600ms linear;\n  -ms-transition: background-color 600ms linear;\n  transition: background-color 600ms linear; }\n\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s; }\n\n.fade-enter,\n.fade-leave-to {\n  opacity: 0; }\n\n/*# sourceMappingURL=VueHotelDatepicker.vue.map */",null]}, media: undefined });
+        inject("data-v-5f8ff57a_0", { source: "\n.tooltip {\n  display: block !important;\n  z-index: 10000;\n}\n.tooltip .tooltip-inner {\n    background: black;\n    color: white;\n    border-radius: 16px;\n    padding: 5px 10px 4px;\n}\n.tooltip .tooltip-arrow {\n    width: 0;\n    height: 0;\n    position: absolute;\n    margin: 5px;\n    border: solid black;\n    z-index: 1;\n}\n.tooltip[x-placement^='top'] {\n    margin-bottom: 5px;\n}\n.tooltip[x-placement^='top'] .tooltip-arrow {\n      border-width: 5px 5px 0 5px;\n      border-left-color: transparent !important;\n      border-right-color: transparent !important;\n      border-bottom-color: transparent !important;\n      bottom: -5px;\n      left: calc(50% - 5px);\n      margin-top: 0;\n      margin-bottom: 0;\n}\n.tooltip[x-placement^='bottom'] {\n    margin-top: 5px;\n}\n.tooltip[x-placement^='bottom'] .tooltip-arrow {\n      border-width: 0 5px 5px 5px;\n      border-left-color: transparent !important;\n      border-right-color: transparent !important;\n      border-top-color: transparent !important;\n      top: -5px;\n      left: calc(50% - 5px);\n      margin-top: 0;\n      margin-bottom: 0;\n}\n.tooltip[x-placement^='right'] {\n    margin-left: 5px;\n}\n.tooltip[x-placement^='right'] .tooltip-arrow {\n      border-width: 5px 5px 5px 0;\n      border-left-color: transparent !important;\n      border-top-color: transparent !important;\n      border-bottom-color: transparent !important;\n      left: -5px;\n      top: calc(50% - 5px);\n      margin-left: 0;\n      margin-right: 0;\n}\n.tooltip[x-placement^='left'] {\n    margin-right: 5px;\n}\n.tooltip[x-placement^='left'] .tooltip-arrow {\n      border-width: 5px 0 5px 5px;\n      border-top-color: transparent !important;\n      border-right-color: transparent !important;\n      border-bottom-color: transparent !important;\n      right: -5px;\n      top: calc(50% - 5px);\n      margin-left: 0;\n      margin-right: 0;\n}\n.tooltip.popover .popover-inner {\n    background: #f9f9f9;\n    color: black;\n    padding: 24px;\n    border-radius: 5px;\n    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);\n}\n.tooltip.popover .popover-arrow {\n    border-color: #f9f9f9;\n}\n.tooltip[aria-hidden='true'] {\n    visibility: hidden;\n    opacity: 0;\n    transition: opacity 0.15s, visibility 0.15s;\n}\n.tooltip[aria-hidden='false'] {\n    visibility: visible;\n    opacity: 1;\n    transition: opacity 0.15s;\n}\n.sk-cube-grid {\n  width: 40px;\n  height: 40px;\n}\n.sk-cube-grid .sk-cube {\n  width: 33%;\n  height: 33%;\n  background-color: #009688;\n  float: left;\n  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\n  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\n}\n.sk-cube-grid .sk-cube1 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n.sk-cube-grid .sk-cube2 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s;\n}\n.sk-cube-grid .sk-cube3 {\n  -webkit-animation-delay: 0.4s;\n  animation-delay: 0.4s;\n}\n.sk-cube-grid .sk-cube4 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s;\n}\n.sk-cube-grid .sk-cube5 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n.sk-cube-grid .sk-cube6 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s;\n}\n.sk-cube-grid .sk-cube7 {\n  -webkit-animation-delay: 0s;\n  animation-delay: 0s;\n}\n.sk-cube-grid .sk-cube8 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s;\n}\n.sk-cube-grid .sk-cube9 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n@-webkit-keyframes sk-cubeGridScaleDelay {\n0%,\n  70%,\n  100% {\n    -webkit-transform: scale3D(1, 1, 1);\n    transform: scale3D(1, 1, 1);\n}\n35% {\n    -webkit-transform: scale3D(0, 0, 1);\n    transform: scale3D(0, 0, 1);\n}\n}\n@keyframes sk-cubeGridScaleDelay {\n0%,\n  70%,\n  100% {\n    -webkit-transform: scale3D(1, 1, 1);\n    transform: scale3D(1, 1, 1);\n}\n35% {\n    -webkit-transform: scale3D(0, 0, 1);\n    transform: scale3D(0, 0, 1);\n}\n}\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\n  display: flex;\n  flex-direction: column;\n}\n.modal-container {\n  width: 500px;\n  margin: 0 auto;\n  background-color: #fff;\n  border-radius: 2px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header {\n  border: none !important;\n}\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983;\n}\n.modal-body {\n  margin: 0;\n  padding: 0;\n  max-height: 60vh;\n  overflow-y: auto;\n}\n.modal-body div.card-text {\n    font-size: .6rem;\n}\n.modal-default-button {\n  float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0;\n}\n.modal-leave-active {\n  opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n* {\n  border-radius: 0 !important;\n  font-family: \"Merriweather Sans\", sans-serif;\n}\n.search--disabled {\n  background-color: #eeeeee;\n  -webkit-transition: background-color 600ms linear;\n  -moz-transition: background-color 600ms linear;\n  -o-transition: background-color 600ms linear;\n  -ms-transition: background-color 600ms linear;\n  transition: background-color 600ms linear;\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n\n/*# sourceMappingURL=VueBlockDates.vue.map */", map: {"version":3,"sources":["VueBlockDates.vue","/var/workspace/projects/vue-date-blocks/src/components/VueBlockDates.vue"],"names":[],"mappings":";AAAA;EACE,0BAA0B;EAC1B,eAAe;CAAE;AACjB;IACE,kBAAkB;IAClB,aAAa;IACb,oBAAoB;IACpB,sBAAsB;CAAE;AAC1B;IACE,SAAS;IACT,UAAU;IACV,mBAAmB;IACnB,YAAY;IACZ,oBAAoB;IACpB,WAAW;CAAE;AACf;IACE,mBAAmB;CAAE;AACrB;MACE,4BAA4B;MAC5B,0CAA0C;MAC1C,2CAA2C;MAC3C,4CAA4C;MAC5C,aAAa;MACb,sBAAsB;MACtB,cAAc;MACd,iBAAiB;CAAE;AACvB;IACE,gBAAgB;CAAE;AAClB;MACE,4BAA4B;MAC5B,0CAA0C;MAC1C,2CAA2C;MAC3C,yCAAyC;MACzC,UAAU;MACV,sBAAsB;MACtB,cAAc;MACd,iBAAiB;CAAE;AACvB;IACE,iBAAiB;CAAE;AACnB;MACE,4BAA4B;MAC5B,0CAA0C;MAC1C,yCAAyC;MACzC,4CAA4C;MAC5C,WAAW;MACX,qBAAqB;MACrB,eAAe;MACf,gBAAgB;CAAE;AACtB;IACE,kBAAkB;CAAE;AACpB;MACE,4BAA4B;MAC5B,yCAAyC;MACzC,2CAA2C;MAC3C,4CAA4C;MAC5C,YAAY;MACZ,qBAAqB;MACrB,eAAe;MACf,gBAAgB;CAAE;AACtB;IACE,oBAAoB;IACpB,aAAa;IACb,cAAc;IACd,mBAAmB;IACnB,0CAA0C;CAAE;AAC9C;IACE,sBAAsB;CAAE;AAC1B;IACE,mBAAmB;IACnB,WAAW;IACX,4CAA4C;CAAE;AAChD;IACE,oBAAoB;IACpB,WAAW;IACX,0BAA0B;CCgC9B;AD9BA;EACE,YAAY;EACZ,aAAa;CAAE;AAEjB;EACE,WAAW;EACX,YAAY;EACZ,0BAA0B;EAC1B,YAAY;EACZ,mEAAmE;EACnE,2DAA2D;CAAE;AAE/D;EACE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;EACE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;EACE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;EACE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;EACE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;EACE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;EACE,4BAA4B;EAC5B,oBAAoB;CAAE;AAExB;EACE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;EACE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;AACE;;;IAGE,oCAAoC;IACpC,4BAA4B;CAAE;AAChC;IACE,oCAAoC;IACpC,4BAA4B;CAAE;CAAE;AAEpC;AACE;;;IAGE,oCAAoC;IACpC,4BAA4B;CAAE;AAChC;IACE,oCAAoC;IACpC,4BAA4B;CAAE;CAAE;AAEpC;EACE,gBAAgB;EAChB,cAAc;EACd,OAAO;EACP,QAAQ;EACR,YAAY;EACZ,aAAa;EACb,qCAAqC;EACrC,cAAc;EACd,uBAAuB;EACvB,6BAA6B;CAAE;AAEjC;EACE,cAAc;EACd,uBAAuB;CAAE;AAE3B;EACE,aAAa;EACb,eAAe;EACf,uBAAuB;EACvB,mBAAmB;EACnB,0CAA0C;EAC1C,yBAAyB;EACzB,0CAA0C;CAAE;AAE9C;EACE,wBAAwB;CAAE;AAE5B;EACE,cAAc;EACd,eAAe;CAAE;AAEnB;EACE,UAAU;EACV,WAAW;EACX,iBAAiB;EACjB,iBAAiB;CAAE;AACnB;IACE,iBAAiB;CAAE;AAEvB;EACE,aAAa;CAAE;;AAEjB;;;;;;;GAOG;AACH;EACE,WAAW;CAAE;AAEf;EACE,WAAW;CAAE;AAEf;;EAEE,8BAA8B;EAC9B,sBAAsB;CAAE;AAE1B;EACE,4BAA4B;EAC5B,6CAA6C;CAAE;AAEjD;EACE,0BAA0B;EAC1B,kDAAkD;EAClD,+CAA+C;EAC/C,6CAA6C;EAC7C,8CAA8C;EAC9C,0CAA0C;CAAE;AAE9C;;EAEE,yBAAyB;CAAE;AAE7B;;EAEE,WAAW;CAAE;;AAEf,6CAA6C","file":"VueBlockDates.vue","sourcesContent":[".tooltip {\n  display: block !important;\n  z-index: 10000; }\n  .tooltip .tooltip-inner {\n    background: black;\n    color: white;\n    border-radius: 16px;\n    padding: 5px 10px 4px; }\n  .tooltip .tooltip-arrow {\n    width: 0;\n    height: 0;\n    position: absolute;\n    margin: 5px;\n    border: solid black;\n    z-index: 1; }\n  .tooltip[x-placement^='top'] {\n    margin-bottom: 5px; }\n    .tooltip[x-placement^='top'] .tooltip-arrow {\n      border-width: 5px 5px 0 5px;\n      border-left-color: transparent !important;\n      border-right-color: transparent !important;\n      border-bottom-color: transparent !important;\n      bottom: -5px;\n      left: calc(50% - 5px);\n      margin-top: 0;\n      margin-bottom: 0; }\n  .tooltip[x-placement^='bottom'] {\n    margin-top: 5px; }\n    .tooltip[x-placement^='bottom'] .tooltip-arrow {\n      border-width: 0 5px 5px 5px;\n      border-left-color: transparent !important;\n      border-right-color: transparent !important;\n      border-top-color: transparent !important;\n      top: -5px;\n      left: calc(50% - 5px);\n      margin-top: 0;\n      margin-bottom: 0; }\n  .tooltip[x-placement^='right'] {\n    margin-left: 5px; }\n    .tooltip[x-placement^='right'] .tooltip-arrow {\n      border-width: 5px 5px 5px 0;\n      border-left-color: transparent !important;\n      border-top-color: transparent !important;\n      border-bottom-color: transparent !important;\n      left: -5px;\n      top: calc(50% - 5px);\n      margin-left: 0;\n      margin-right: 0; }\n  .tooltip[x-placement^='left'] {\n    margin-right: 5px; }\n    .tooltip[x-placement^='left'] .tooltip-arrow {\n      border-width: 5px 0 5px 5px;\n      border-top-color: transparent !important;\n      border-right-color: transparent !important;\n      border-bottom-color: transparent !important;\n      right: -5px;\n      top: calc(50% - 5px);\n      margin-left: 0;\n      margin-right: 0; }\n  .tooltip.popover .popover-inner {\n    background: #f9f9f9;\n    color: black;\n    padding: 24px;\n    border-radius: 5px;\n    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1); }\n  .tooltip.popover .popover-arrow {\n    border-color: #f9f9f9; }\n  .tooltip[aria-hidden='true'] {\n    visibility: hidden;\n    opacity: 0;\n    transition: opacity 0.15s, visibility 0.15s; }\n  .tooltip[aria-hidden='false'] {\n    visibility: visible;\n    opacity: 1;\n    transition: opacity 0.15s; }\n\n.sk-cube-grid {\n  width: 40px;\n  height: 40px; }\n\n.sk-cube-grid .sk-cube {\n  width: 33%;\n  height: 33%;\n  background-color: #009688;\n  float: left;\n  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\n  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; }\n\n.sk-cube-grid .sk-cube1 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s; }\n\n.sk-cube-grid .sk-cube2 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s; }\n\n.sk-cube-grid .sk-cube3 {\n  -webkit-animation-delay: 0.4s;\n  animation-delay: 0.4s; }\n\n.sk-cube-grid .sk-cube4 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s; }\n\n.sk-cube-grid .sk-cube5 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s; }\n\n.sk-cube-grid .sk-cube6 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s; }\n\n.sk-cube-grid .sk-cube7 {\n  -webkit-animation-delay: 0s;\n  animation-delay: 0s; }\n\n.sk-cube-grid .sk-cube8 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s; }\n\n.sk-cube-grid .sk-cube9 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s; }\n\n@-webkit-keyframes sk-cubeGridScaleDelay {\n  0%,\n  70%,\n  100% {\n    -webkit-transform: scale3D(1, 1, 1);\n    transform: scale3D(1, 1, 1); }\n  35% {\n    -webkit-transform: scale3D(0, 0, 1);\n    transform: scale3D(0, 0, 1); } }\n\n@keyframes sk-cubeGridScaleDelay {\n  0%,\n  70%,\n  100% {\n    -webkit-transform: scale3D(1, 1, 1);\n    transform: scale3D(1, 1, 1); }\n  35% {\n    -webkit-transform: scale3D(0, 0, 1);\n    transform: scale3D(0, 0, 1); } }\n\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  flex-direction: column;\n  transition: opacity .3s ease; }\n\n.modal-wrapper {\n  display: flex;\n  flex-direction: column; }\n\n.modal-container {\n  width: 500px;\n  margin: 0 auto;\n  background-color: #fff;\n  border-radius: 2px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  transition: all .3s ease;\n  font-family: Helvetica, Arial, sans-serif; }\n\n.modal-header {\n  border: none !important; }\n\n.modal-header h3 {\n  margin-top: 0;\n  color: #42b983; }\n\n.modal-body {\n  margin: 0;\n  padding: 0;\n  max-height: 60vh;\n  overflow-y: auto; }\n  .modal-body div.card-text {\n    font-size: .6rem; }\n\n.modal-default-button {\n  float: right; }\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter {\n  opacity: 0; }\n\n.modal-leave-active {\n  opacity: 0; }\n\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1); }\n\n* {\n  border-radius: 0 !important;\n  font-family: \"Merriweather Sans\", sans-serif; }\n\n.search--disabled {\n  background-color: #eeeeee;\n  -webkit-transition: background-color 600ms linear;\n  -moz-transition: background-color 600ms linear;\n  -o-transition: background-color 600ms linear;\n  -ms-transition: background-color 600ms linear;\n  transition: background-color 600ms linear; }\n\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s; }\n\n.fade-enter,\n.fade-leave-to {\n  opacity: 0; }\n\n/*# sourceMappingURL=VueBlockDates.vue.map */",null]}, media: undefined });
 
       };
       /* scoped */
@@ -1262,9 +1258,8 @@
       ) {
         var component = (typeof script === 'function' ? script.options : script) || {};
 
-        {
-          component.__file = "/var/workspace/projects/vue-hotel-datepicker/src/components/VueHotelDatepicker.vue";
-        }
+        // For security concerns, we use only base name in production mode.
+        component.__file = "/var/workspace/projects/vue-date-blocks/src/components/VueBlockDates.vue";
 
         if (!component.render) {
           component.render = template.render;
@@ -1363,7 +1358,7 @@
       
 
       
-      var VueHotelDatepicker$1 = __vue_normalize__$4(
+      var VueBlockDates = __vue_normalize__$4(
         { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
         __vue_inject_styles__$4,
         __vue_script__$4,
@@ -1374,6 +1369,6 @@
         undefined
       );
 
-    return VueHotelDatepicker$1;
+    return VueBlockDates;
 
 })));

@@ -50,7 +50,7 @@ module.exports = {
   configureWebpack: {
     devtool: 'cheap-eval-source-map',
     output: {
-      filename: 'vue-hotel-datepicker.js',
+      filename: 'vue-block-dates.js',
       libraryTarget: 'umd'
     },
     plugins: [

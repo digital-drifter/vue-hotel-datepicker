@@ -22,7 +22,7 @@
       }
     }
   })
-  export default class Hotel extends Vue {
+  export default class Result extends Vue {
     @Prop({required: true})
     public name: string
 

@@ -20,8 +20,8 @@
   import { Component, Prop, Vue } from 'vue-property-decorator'
 
   @Component
-  export default class SearchOverlay extends Vue {
-    public name: string = 'SearchOverlay'
+  export default class Overlay extends Vue {
+    public name: string = 'Overlay'
 
     @Prop({type: Boolean, default: false})
     public searching: boolean

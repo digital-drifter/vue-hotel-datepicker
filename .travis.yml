@@ -37,14 +37,14 @@ deploy:
   skip_cleanup: true
   file_glob: true
   api_key:
-    secure: "$GITHUB_API_KEY"
-  file: "dist/vue-hotel-datepicker.*"
+    secure: $GITHUB_API_KEY
+  file: "dist/vue-block-dates.*"
   on:
     branch: release
 - provider: npm
   skip_cleanup: true
   email: "$GIT_EMAIL"
   api_key:
-    secure: "$NPM_API_KEY"
+    secure: $NPM_API_KEY
   on:
     branch: release

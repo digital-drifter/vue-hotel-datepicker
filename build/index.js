@@ -14,27 +14,27 @@ import chalk from 'chalk'
 const version = require('../package.json').version
 const banner =
         '/*!\n' +
-        ' * vue-hotel-datepicker v' + version + '\n' +
+        ' * vue-block-dates v' + version + '\n' +
         ' * (c) 2018-' + new Date().getFullYear() + ' Brian Lee\n' +
         ' * Released under the MIT License.\n' +
         ' */'
 
 const configs = {
   umd: {
-    output: 'vue-hotel-datepicker.js',
+    output: 'vue-block-dates.js',
     format: 'umd'
   },
   umdMin: {
-    output: 'vue-hotel-datepicker.min.js',
+    output: 'vue-block-dates.min.js',
     format: 'umd',
     plugins: [terser()]
   },
   cjs: {
-    output: 'vue-hotel-datepicker.common.js',
+    output: 'vue-block-dates.common.js',
     format: 'cjs'
   },
   esm: {
-    output: 'vue-hotel-datepicker.esm.js',
+    output: 'vue-block-dates.esm.js',
     format: 'es'
   }
 }
@@ -44,7 +44,7 @@ async function build () {
     const config = configs[key]
     console.log(chalk.cyan(`Building ${key}: ${config.output}`))
     const inputOptions = {
-      input: path.join(__dirname, '..', 'src', 'components', 'VueHotelDatepicker.vue'),
+      input: path.join(__dirname, '..', 'src', 'components', 'VueBlockDates.vue'),
       external: [
         '@fortawesome/fontawesome-svg-core',
         '@fortawesome/free-solid-svg-icons',
@@ -82,7 +82,7 @@ async function build () {
       file: path.join(__dirname, '..', 'dist', config.output),
       format: config.format,
       banner: banner,
-      name: 'VueHotelDatepicker',
+      name: 'VueBlockDates',
       globals: {
         'vue-property-decorator': 'vue-property-decorator'
       }
