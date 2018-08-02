@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <search-overlay :searching="searching"></search-overlay>
+        <overlay :searching="searching"></overlay>
         <div class="card-header d-flex flex-row justify-content-between" :style="theme">
             <div>
                 <font-awesome-icon icon="calendar"></font-awesome-icon>
@@ -41,7 +41,7 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
-  import SearchOverlay from './SearchOverlay.vue'
+  import Overlay from './search/Overlay.vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
   import VueDatepicker from 'vuejs-datepicker'
   import VTooltip from 'v-tooltip'
@@ -51,7 +51,7 @@
   @Component({
     components: {
       FontAwesomeIcon,
-      SearchOverlay,
+      Overlay,
       VueDatepicker
     },
     directives: {
@@ -65,8 +65,8 @@
       }
     }
   })
-  export default class HotelDatePicker extends Vue {
-    public name: string = 'HotelDatePicker'
+  export default class DatePicker extends Vue {
+    public name: string = 'DatePicker'
 
     /**
      * The selected checkin and checkout dates.

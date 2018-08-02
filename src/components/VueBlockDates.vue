@@ -1,20 +1,16 @@
 <template>
     <div class="d-flex justify-content-center">
         <transition-group name="fade" mode="out-in">
-            <hotel-date-picker
-                    v-if="!results.length"
+            <date-picker
+                    v-if="!open"
                     key="date-picker"
                     :searching="searching"
                     :start-date="startDate"
                     :end-date="endDate"
                     @search="onSearch">
-            </hotel-date-picker>
+            </date-picker>
             <slot name="results" v-else>
-                <results-modal
-                        @close="onClose"
-                        key="results-list"
-                        :items="results">
-                </results-modal>
+                <modal @close="onClose" key="results-list" :items="results"></modal>
             </slot>
         </transition-group>
     </div>
@@ -25,9 +21,9 @@
   import { IconDefinition, library } from '@fortawesome/fontawesome-svg-core'
   import { faArrowLeft, faCalendar, faSearch, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-  import HotelDatePicker from './HotelDatePicker.vue'
-  import SearchOverlay from './SearchOverlay.vue'
-  import ResultsModal from './ResultsModal.vue'
+  import DatePicker from './DatePicker.vue'
+  import Overlay from './search/Overlay.vue'
+  import Modal from './search/Modal.vue'
   import { Period } from '../../types'
 
   const icons: { [key: string]: IconDefinition } = {
@@ -46,10 +42,10 @@
 
   @Component({
     components: {
-      HotelDatePicker,
-      SearchOverlay,
+      DatePicker,
+      Overlay,
       FontAwesomeIcon,
-      ResultsModal
+      Modal
     }
   })
   export default class VueHotelDatepicker extends Vue {
@@ -69,6 +65,10 @@
 
     @Prop({type: Date, required: true})
     protected endDate: Date
+
+    get open (): boolean {
+      return !!this.results.length
+    }
 
     /**
      * Send a fetch request using the provided Request object.
@@ -90,9 +90,7 @@
         .then((data: any) => {
           this.searching = !this.searching
 
-          if (Array.isArray(data)) {
-            this.results = data
-          }
+          this.results.splice(0, Array.isArray(data) ? data.length : 0, Array.isArray(data) ? data : [])
         })
     }
 

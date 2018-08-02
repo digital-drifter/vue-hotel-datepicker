@@ -1,19 +1,19 @@
 import '@babel/polyfill'
 import Vue, { CreateElement } from 'vue'
 import App from '@/App.vue'
+import { create } from '@/utils/dates'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 Vue.config.productionTip = false
 
-const now = new Date()
-
 const app = new Vue({
-  el: '#app',
   render: (h: CreateElement) => h(App, {
     props: {
-      startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7),
-      endDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7),
+      startDate: create(-7, 'days'),
+      endDate: create(7, 'days'),
       url: process.env.VUE_APP_API_URL
     }
   })
 })
+
+app.$mount('#app')

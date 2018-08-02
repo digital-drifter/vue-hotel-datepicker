@@ -44,7 +44,7 @@ async function build () {
     const config = configs[key]
     console.log(chalk.cyan(`Building ${key}: ${config.output}`))
     const inputOptions = {
-      input: path.join(__dirname, '..', 'src', 'components', 'VueHotelDatepicker.vue'),
+      input: path.join(__dirname, '..', 'src', 'components', 'VueBlockDates.vue'),
       external: [
         '@fortawesome/fontawesome-svg-core',
         '@fortawesome/free-solid-svg-icons',
@@ -82,7 +82,7 @@ async function build () {
       file: path.join(__dirname, '..', 'dist', config.output),
       format: config.format,
       banner: banner,
-      name: 'VueHotelDatepicker',
+      name: 'VueBlockDates',
       globals: {
         'vue-property-decorator': 'vue-property-decorator'
       }

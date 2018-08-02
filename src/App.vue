@@ -10,11 +10,11 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
-  import VueHotelDatepicker from '@/components/VueHotelDatepicker.vue'
+  import VueBlockDates from '@/components/VueBlockDates.vue'
 
   @Component({
     components: {
-      VueHotelDatepicker
+      VueBlockDates
     }
   })
   export default class App extends Vue {

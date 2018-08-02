@@ -12,13 +12,13 @@
                         <div>{{ items | results }}</div>
                     </div>
                     <div class="modal-body">
-                        <hotel v-for="(item, index) in items"
+                        <result v-for="(item, index) in items"
                                :key="index"
                                :name="item.name"
                                :rate="item.rate"
                                :image="item.image"
                                :description="item.description">
-                        </hotel>
+                        </result>
                     </div>
                 </div>
             </div>
@@ -28,12 +28,12 @@
 
 <script lang="ts">
   import { Component, Prop, Vue } from 'vue-property-decorator'
-  import Hotel from './Hotel.vue'
+  import Result from './Result.vue'
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
   @Component({
     components: {
-      Hotel,
+      Result,
       FontAwesomeIcon
     },
     filters: {
@@ -43,8 +43,8 @@
       }
     }
   })
-  export default class ResultsModal extends Vue {
-    public name: string = 'ResultsModal'
+  export default class Modal extends Vue {
+    public name: string = 'Modal'
 
     @Prop({type: Array, required: true})
     public items: any[]
